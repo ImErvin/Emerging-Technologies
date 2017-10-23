@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head ng-app="app">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-        crossorigin="anonymous">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.css" />
 </head>
 
 <body>
     <div class="container">
-        <!-- As a heading -->
-        <nav class="navbar navbar-inverse bg-inverse">
-            <h1 class="navbar-brand mb-0">Emerging Technologies</h1>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="mx-auto" href="#">
+                <img src="/static/assets/logo.png" width="60" height="30" class="d-inline-block align-top" alt="logo">
+            </a>
         </nav>
-        <div class="container" style="margin-top:10px"></div>
+
+        <div class="row">
+            <div class="col-md-3">
+                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Tooltip</div>
+                        <div class="card-body">
+                            <h4 class="card-title">Welcome to my emerging technologies application</h4>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+
+                <p class="lead">
+                    Welcome to my emerging technologies project.
+                </p>
+                <hr/>
+                <p>
+                    Use the form to your left to upload an image of a handwritten figure e.g:
+                </p>
+                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" />
+                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" />
+                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00006-1.png?raw=true" />
+                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00007-4.png?raw=true" />
+                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00008-9.png?raw=true" />
+            </div>
+            <div class="col-md-9">
+
+            </div>
+        </div>
+    </div>
+    <!-- As a heading -->
+
+    <!-- <div class="container" style="margin-top:10px"></div>
         <div class="row">
             <div class="col-md-3">
                 <p class="lead">
@@ -38,7 +67,7 @@
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-6">
-                        <button class="btn btn-block btn-secondary uploadButton">Upload from File</button>
+                        <button class="btn btn-block btn-secondary uploadButton" ng-click="random()">Upload from File</button>
                     </div>
                     <div class="col-md-6">
                         <button class="btn btn-block btn-secondary uploadButton">Upload from URL</button>
@@ -46,7 +75,7 @@
                 </div>
                 <hr/>
 
-                <div class="card">
+                <div class="card" ng-if="uploadOptions[0]">
                     <div class="card-block">
                         <h4 class="card-title">Upload Image from File</h4>
                         <form>
@@ -58,7 +87,7 @@
                     </div>
                     <img class="card-img-bottom" style="display: none" src="assets/placeholder.svg" alt="Card image cap">
                 </div>
-                <div class="card">
+                <div class="card" ng-if="uploadOptions[1]">
                         <div class="card-block">
                             <h4 class="card-title">Upload Image from URL</h4>
                             <form>
@@ -75,17 +104,21 @@
         </div>
     </div>
 
-    </div>
+    </div> -->
 
     <!-- jQuery first, then Tether, then Bootstrap JS, then AngularJS -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script> -->
+
+    <!-- Import AngularJS scripts -->
+    <!-- <script src="./js/app.js"></script>
+    <script src="./js/controllers.js"></script>
+    <script src="./js/services.js"></script> -->
 </body>
 
 </html>

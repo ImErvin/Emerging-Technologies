@@ -1,0 +1,40 @@
+{
+  "name": "emerging-technologies",
+  "version": "1.0.0",
+  "description": "A simple web application that uses Tensorflow on the backend to process handwritten figures and distinguish what the handrwritten figure is.",
+  "main": "/static/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild & npm run-script movemodules",
+    "movemodules": "mv ./node_modules ./static/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImErvin/Emerging-Technologies.git"
+  },
+  "keywords": [
+    "Tensorflow",
+    "Python",
+    "AngularJS",
+    "Bootstrap4",
+    "AI",
+    "MNIST",
+    "NIST",
+    "Deep",
+    "Learning",
+    "Machine",
+    "Learning",
+    "Datasets"
+  ],
+  "author": "Ervin Mamutov - github.com/ImErvin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ImErvin/Emerging-Technologies/issues"
+  },
+  "homepage": "https://github.com/ImErvin/Emerging-Technologies#readme",
+  "dependencies": {
+    "angular": "^1.6.5",
+    "bootstrap": "4.0.0-beta.2",
+    "font-awesome": "*"
+  }
+}

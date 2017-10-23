@@ -12,100 +12,81 @@
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark mb-3">
             <a class="mx-auto" href="#">
-                <img src="/static/assets/logo.png" width="60" height="30" class="d-inline-block align-top" alt="logo">
+                <img src="/static/assets/logogw.png" width="70" height="35" class="d-inline-block align-top" alt="logo">
             </a>
         </nav>
 
         <div class="row">
-            <div class="col-md-3">
-                    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-                        <div class="card-header">Tooltip</div>
-                        <div class="card-body">
-                            <h4 class="card-title">Welcome to my emerging technologies application</h4>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="col-lg-3 mb-3">
+                <div class="alert alert-secondary" style="border-left-width: 7px; border-left-color: #155724" role="alert">
+                    <h5>Handwriting recognition using Tensorflow</h5>
+                </div>
+                <div class="alert alert-secondary" style="border-left-width: 7px; border-left-color: #155724" role="alert">
+                    <p>Use the form to your left to upload an image of a handwritten figure e.g:</p>
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" />
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" />
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00006-1.png?raw=true" />
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00007-4.png?raw=true" />
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00008-9.png?raw=true" />
+                    <hr/>
+                    <p>This application will then use Tensorflow to predict what figure is drawn e.g: </p>
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" /> = 0
+                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" /> = 4
+                </div>
+                
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-group text-center">
+                            <a class="card text-white bg-secondary mb-3">
+                                <div class="card-header">
+                                    <p class="card-text">Upload from File</p>
+                                </div>
+                            </a>
+                            <a class="card text-white bg-success mb-3">
+                                <div class="card-header">
+                                    <p class="card-text">Upload from URL</p>
+                                </div>
+                            </a>
                         </div>
                     </div>
-
-                <p class="lead">
-                    Welcome to my emerging technologies project.
-                </p>
-                <hr/>
-                <p>
-                    Use the form to your left to upload an image of a handwritten figure e.g:
-                </p>
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00006-1.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00007-4.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00008-9.png?raw=true" />
-            </div>
-            <div class="col-md-9">
-
-            </div>
-        </div>
-    </div>
-    <!-- As a heading -->
-
-    <!-- <div class="container" style="margin-top:10px"></div>
-        <div class="row">
-            <div class="col-md-3">
-                <p class="lead">
-                    Welcome to my emerging technologies project.
-                </p>
-                <hr/>
-                <p>
-                    Use the form to your left to upload an image of a handwritten figure e.g:
-                </p>
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00006-1.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00007-4.png?raw=true" />
-                <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00008-9.png?raw=true" />
-            </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-6">
-                        <button class="btn btn-block btn-secondary uploadButton" ng-click="random()">Upload from File</button>
-                    </div>
-                    <div class="col-md-6">
-                        <button class="btn btn-block btn-secondary uploadButton">Upload from URL</button>
-                    </div>
                 </div>
-                <hr/>
-
-                <div class="card" ng-if="uploadOptions[0]">
-                    <div class="card-block">
-                        <h4 class="card-title">Upload Image from File</h4>
+                <div class="card text-light bg-dark mb-3">
+                    <div class="card-header">Upload Image from File</div>
+                    <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <input type="file" class="form-control-file" id="fileUpload01" aria-describedby="fileHelp">
-                                <small id="fileHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
+                                <label for="fileInput01">Example file input</label>
+                                <input type="file" class="form-control-file" aria-describedby="fileInputHelp" id="fileInput01">
+                                <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
                             </div>
                         </form>
+                        <button class="btn btn-success btn-block">Submit</button>
                     </div>
-                    <img class="card-img-bottom" style="display: none" src="assets/placeholder.svg" alt="Card image cap">
                 </div>
-                <div class="card" ng-if="uploadOptions[1]">
-                        <div class="card-block">
-                            <h4 class="card-title">Upload Image from URL</h4>
-                            <form>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="fileUpload02" placeholder="Image URL">
-                                        <small id="fileHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Submit</button>
-                                </form>
-                        </div>
-                        <img class="card-img-bottom" style="display: none" src="assets/placeholder.svg" alt="Card image cap">
+
+                <div class="card text-light bg-dark mb-3">
+                    <div class="card-header">Upload Image from File</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="urlInput01">Image URL</label>
+                                <input type="email" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
+                                <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
+                            </div>
+                        </form>
+                        <button class="btn btn-success btn-block">Submit</button>
                     </div>
+                </div>
             </div>
         </div>
+
     </div>
-
-    </div> -->
-
+    </div>
     <!-- jQuery first, then Tether, then Bootstrap JS, then AngularJS -->
     <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>

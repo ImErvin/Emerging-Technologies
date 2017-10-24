@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head ng-app="app">
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="/static/node_modules/font-awesome/css/font-awesome.css" />
 </head>
 
-<body>
-    <div class="container">
+<body ng-app="app">
+    <div class="container" ng-controller="mainCtrl">
         <nav class="navbar navbar-dark bg-dark mb-1">
             <a class="mx-auto" href="#">
                 <img src="/static/assets/logogw.png" width="70" height="35" class="d-inline-block align-top" alt="logo">
@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="alert alert-inverse text-center" role="alert">
-                    Handwriting recognition using Tensorflow
+                    808 is a handwriting recognition application - Simply upload a handwritten number and voila!
                 </div>
                 <!-- <div class="alert alert-secondary" style="border-left-width: 7px; border-left-color: #155724" role="alert">
                     <p>Use the form to your left to upload an image of a handwritten figure e.g:</p>
@@ -44,14 +44,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-group text-center">
-                            <a class="card text-white bg-secondary mb-3">
+                            <a class="card text-white bg-success mb-3" ng-click="random()">
                                 <div class="card-header">
-                                    <p class="card-text">Upload from File</p>
+                                    <p class="card-text"><i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                        Upload from File</p>
                                 </div>
                             </a>
-                            <a class="card text-white bg-success mb-3">
+                            <a class="card text-white bg-secondary mb-3">
                                 <div class="card-header">
-                                    <p class="card-text">Upload from URL</p>
+                                    <p class="card-text"><i class="fa fa-file-image-o" aria-hidden="true"></i>
+                                        Upload from URL</p>
                                 </div>
                             </a>
                         </div>
@@ -67,12 +69,12 @@
                                 <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block">Submit</button>
+                        <button class="btn btn-success btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
 
                 <div class="card text-light bg-dark mb-3">
-                    <div class="card-header">Upload Image from File</div>
+                    <div class="card-header">Upload Image from URL</div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
@@ -81,22 +83,28 @@
                                 <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block">Submit</button>
+                        <button class="btn btn-success btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card bg-success border-dark text-white font-weight-bold text-center">
-                    <div class="card-header">Processed Image</div>
-                    <img class="card-img" src="https://img3.stockfresh.com/files/i/inxti/m/18/2198877_stock-photo-9---old-brown-handwritten-number-over-grunge-silver-background.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
+                    <div class="card-header"><i class="fa fa-smile-o" aria-hidden="true"></i> Successfully Processed</div>
+                    <img class="card-img" src="https://st.depositphotos.com/2899123/3753/v/950/depositphotos_37532053-stock-illustration-9-black-handwritten-number-on.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
                     <div class="card-footer text-white">
                         Picture Rendered, Image shows number {{9}}
                     </div>
                 </div>
+                <div class="card bg-danger border-dark text-white font-weight-bold text-center">
+                        <div class="card-header"><i class="fa fa-frown-o" aria-hidden="true"></i> Unsuccessfully Processed</div>
+                        <img class="card-img" src="http://images.all-free-download.com/images/graphiclarge/hand_drawn_dogs_vector_set_538626.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
+                        <div class="card-footer text-white">
+                            Error message
+                        </div>
+                    </div>
             </div>
         </div>
 
-    </div>
     </div>
     <!-- jQuery first, then Tether, then Bootstrap JS, then AngularJS -->
     <!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
@@ -107,10 +115,11 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script> -->
 
-    <!-- Import AngularJS scripts -->
-    <!-- <script src="./js/app.js"></script>
-    <script src="./js/controllers.js"></script>
-    <script src="./js/services.js"></script> -->
+    <!-- Import AngularJS, then scripts -->
+    <script src="/static/node_modules/angular/angular.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/controllers.js"></script>
+    <script src="/static/js/services.js"></script>
 </body>
 
 </html>

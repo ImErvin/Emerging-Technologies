@@ -24,5 +24,3 @@ angular.module('app.controllers', [])
     $scope.uploadFromURL = uploadFromURL;
     $scope.uploadOptions = uploadOptions;
 });
-
-console.log("woo");

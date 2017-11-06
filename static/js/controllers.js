@@ -1,27 +1,14 @@
 angular.module('app.controllers', [])
 
-.controller('mainCtrl', function($scope, $http, $q) {
+.controller('mainCtrl', function($scope, APIFactory) {
     var uploadFromFile;
     var uploadFromURL;
     var uploadOptions = [true,false];
 
-    function message() {
-        var deferred = $q.defer();
-
-        $http({
-            method: 'GET',
-            url: 'http://127.0.0.1:5000/image',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        }).then(function success(response) {
-
-            deferred.resolve(response)
-        }).catch(function(error) {
-            deferred.reject(error);
+    function message(){
+        APIFactory.response.getImage().then(function(data){
+            console.log(data);
         });
-
-        console.log(deferred.promise);
     }
 
     function uploadFromFile(uploadMethod){

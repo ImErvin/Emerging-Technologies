@@ -1,11 +1,28 @@
 angular.module('app.controllers', [])
 
-.controller('mainCtrl', function($scope) {
+.controller('mainCtrl', function($scope, $http, $q) {
     var uploadFromFile;
     var uploadFromURL;
     var uploadOptions = [true,false];
 
-    console.log("woo");
+    function message() {
+        var deferred = $q.defer();
+
+        $http({
+            method: 'GET',
+            url: 'http://127.0.0.1:5000/image',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(function success(response) {
+
+            deferred.resolve(response)
+        }).catch(function(error) {
+            deferred.reject(error);
+        });
+
+        console.log(deferred.promise);
+    }
 
     function uploadFromFile(uploadMethod){
         switch(uploadMethod){
@@ -23,4 +40,5 @@ angular.module('app.controllers', [])
     $scope.uploadFromFile = uploadFromFile;
     $scope.uploadFromURL = uploadFromURL;
     $scope.uploadOptions = uploadOptions;
+    $scope.message = message;
 });

@@ -35,6 +35,7 @@
   "dependencies": {
     "angular": "^1.6.5",
     "bootstrap": "4.0.0-beta.2",
-    "font-awesome": "*"
+    "font-awesome": "*",
+    "animate.css": "*"
   }
 }

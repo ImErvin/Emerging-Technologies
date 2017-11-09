@@ -21,7 +21,7 @@
 
 <body ng-app="app">
     <div ng-controller="mainCtrl" class="animated fadeIn" ng-cloak>
-        <nav class="navbar navbar-dark bg-dark mb-1">
+        <nav class="navbar navbar-dark bg-dark mb-1 customBg">
             <a class="mx-auto" href="#">
                 <img src="/static/assets/logogw.png" width="70" height="35" class="d-inline-block align-top" alt="logo">
             </a>
@@ -38,7 +38,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-group text-center">
-                            <a class="card text-white bg-success mb-3" ng-click="uploadOptionSelected(0)">
+                            <a class="card text-white customButtonBg mb-3" ng-click="uploadOptionSelected(0)">
                                 <div class="card-header">
                                     <p class="card-text"><i class="fa fa-file-image-o" aria-hidden="true"></i>
                                         Upload from File</p>
@@ -53,21 +53,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="card text-light bg-dark mb-3 animated fadeIn" ng-show="uploadOption[0]">
+                <div class="card text-dark bg-white mb-3 animated fadeIn" ng-show="uploadOption[0]">
                     <div class="card-header">Upload Image from File</div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
-                                <label for="fileInput01">Example file input</label>
+                                <label for="fileInput01">Example file input {{imageFile}}</label>
                                 <input type="file" class="form-control-file" aria-describedby="fileInputHelp" id="fileInput01">
                                 <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        <button class="btn btn-inverse text-white customButtonBg btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
 
-                <div class="card text-light bg-dark mb-3 animated fadeIn"  ng-show="uploadOption[1]">
+                <div class="card text-dark bg-white mb-3 animated fadeIn"  ng-show="uploadOption[1]">
                     <div class="card-header">Upload Image from URL</div>
                     <div class="card-body">
                         <form>
@@ -77,13 +77,13 @@
                                 <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        <button class="btn btn-inverse text-white customButtonBg btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-dark border-dark text-white text-center">
-                    <div class="card-header font-weight-bold {{ rendered.bgColor }}" ><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
+                <div class="card text-dark bg-white border-dark text-center">
+                    <div class="card-header font-weight-bold text-white {{ rendered.bgColor }}" ><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
                     <div class="card-header font-weight-bold" >{{rendered.fileName}}</div>
                     <img class="card-img" src="https://st.depositphotos.com/2899123/3753/v/950/depositphotos_37532053-stock-illustration-9-black-handwritten-number-on.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
                     <div class="card-footer">
@@ -91,14 +91,14 @@
                         <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
                         
                         <div class="btn-group" role="group" aria-label="Basic example" ng-show="feedbackButtons">
-                            <button class="btn btn-md btn-success" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
-                            <button class="btn btn-md btn-danger" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
+                            <button class="btn btn-md btn-inverse text-white customButtonBg" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
+                            <button class="btn btn-md btn-secondary" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
                         </div>
 
                         <div class="input-group animated fadeIn" ng-show="predictionCorrection">
                             <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
                             <div class="input-group-addon bg-white">
-                                <button class="btn btn-success btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
+                                <button class="btn btn-inverse text-white customButtonBg btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
                                     <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                                 </button>
                             </div>

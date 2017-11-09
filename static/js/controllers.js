@@ -8,12 +8,13 @@ angular.module('app.controllers', [])
         fileName: "sampleImage.jpg",
         message: "Image was processed successfully.",
         icon: "fa fa-smile-o",
-        bgColor: "bg-success",
+        bgColor: "customButtonBg",
         prediction: "9",
     };
     var feedbackButtons = true;
     var predictionCorrection = false;
     var feedbackSent = false;
+    var imageFile;
 
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
@@ -37,6 +38,10 @@ angular.module('app.controllers', [])
         
     }
 
+    function uploadImage(file){
+        console.log(file)
+    }
+
     $scope.uploadOption = uploadOption;
     $scope.imageUrl = imageUrl;
     $scope.uploadOptionSelected = uploadOptionSelected;
@@ -44,4 +49,5 @@ angular.module('app.controllers', [])
     $scope.feedbackButtons = feedbackButtons;
     $scope.predictionCorrection = predictionCorrection;
     $scope.feedbackSent = feedbackSent;
+    $scope.uploadImage = uploadImage;
 });

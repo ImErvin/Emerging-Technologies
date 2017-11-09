@@ -22,7 +22,7 @@ angular.module('app.services', [])
             return deferred.promise;
         }
 
-        response.postImage = function (url) {
+        response.postImage = function (file) {
             var deferred = $q.defer();
 
 
@@ -30,7 +30,7 @@ angular.module('app.services', [])
 
             $http({
                 method: 'POST',
-                url: 'http://127.0.0.1:8080/image/'+url,
+                url: 'http://127.0.0.1:8080/uploadImage',
                 headers: {
                     'Content-Type': 'application/json'
                 },

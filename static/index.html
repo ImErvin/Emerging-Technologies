@@ -6,6 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/assets/css/index.css"/>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.css" />
 
@@ -17,7 +20,7 @@
 </head>
 
 <body ng-app="app">
-    <div ng-controller="mainCtrl">
+    <div ng-controller="mainCtrl" class="animated fadeIn" ng-cloak>
         <nav class="navbar navbar-dark bg-dark mb-1">
             <a class="mx-auto" href="#">
                 <img src="/static/assets/logogw.png" width="70" height="35" class="d-inline-block align-top" alt="logo">
@@ -29,31 +32,19 @@
                 <div class="alert alert-inverse text-center" role="alert">
                     808 is a handwriting recognition application - Simply upload a handwritten number and voila!
                 </div>
-                <!-- <div class="alert alert-secondary" style="border-left-width: 7px; border-left-color: #155724" role="alert">
-                    <p>Use the form to your left to upload an image of a handwritten figure e.g:</p>
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" />
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" />
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00006-1.png?raw=true" />
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00007-4.png?raw=true" />
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00008-9.png?raw=true" />
-                    <hr/>
-                    <p>This application will then use Tensorflow to predict what figure is drawn e.g: </p>
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00004-0.png?raw=true" /> = 0
-                    <img src="https://github.com/ImErvin/MNIST-Problem-Sheet/blob/master/images/test-00005-4.png?raw=true" /> = 4
-                </div> -->
             </div>
 
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card-group text-center">
-                            <a class="card text-white bg-success mb-3" ng-click="uploadOptions = [false,true]">
+                            <a class="card text-white bg-success mb-3" ng-click="uploadOptionSelected(0)">
                                 <div class="card-header">
                                     <p class="card-text"><i class="fa fa-file-image-o" aria-hidden="true"></i>
                                         Upload from File</p>
                                 </div>
                             </a>
-                            <a class="card text-white bg-secondary mb-3" ng-click="uploadOptions = [true,false]">
+                            <a class="card text-white bg-secondary mb-3" ng-click="uploadOptionSelected(1)">
                                 <div class="card-header">
                                     <p class="card-text"><i class="fa fa-file-image-o" aria-hidden="true"></i>
                                         Upload from URL</p>
@@ -62,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card text-light bg-dark mb-3" ng-if="uploadOptions[0]">
+                <div class="card text-light bg-dark mb-3 animated fadeIn" ng-show="uploadOption[0]">
                     <div class="card-header">Upload Image from File</div>
                     <div class="card-body">
                         <form>
@@ -72,44 +63,51 @@
                                 <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block animated bounce"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        <button class="btn btn-success btn-block"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
 
-                <div class="card text-light bg-dark mb-3"  ng-if="uploadOptions[1]">
+                <div class="card text-light bg-dark mb-3 animated fadeIn"  ng-show="uploadOption[1]">
                     <div class="card-header">Upload Image from URL</div>
                     <div class="card-body">
                         <form>
                             <div class="form-group">
                                 <label for="urlInput01">Image URL</label>
-                                <input type="email" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
+                                <input type="text" ng-model="imageUrl" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
                                 <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
                             </div>
                         </form>
-                        <button class="btn btn-success btn-block" ng-click="message()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        <button class="btn btn-success btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-success border-dark text-white font-weight-bold text-center" ng-hide="uploadOptions[0]">
-                    <div class="card-header"><i class="fa fa-smile-o" aria-hidden="true"></i> Successfully Processed</div>
+                <div class="card bg-dark border-dark text-white text-center" ng-show="uploadOption[0]">
+                    <div class="card-header font-weight-bold {{ rendered.bgColor }}" ><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
+                    <div class="card-header font-weight-bold" >{{rendered.fileName}}</div>
                     <img class="card-img" src="https://st.depositphotos.com/2899123/3753/v/950/depositphotos_37532053-stock-illustration-9-black-handwritten-number-on.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
-                    <div class="card-footer text-white">
-                        Picture Rendered, Image shows number {{9}}
-                    </div>
-                </div>
-                <div class="card bg-danger border-dark text-white font-weight-bold text-center" ng-hide="uploadOptions[0]">
-                    <div class="card-header"><i class="fa fa-frown-o" aria-hidden="true"></i> Unsuccessfully Processed</div>
-                    <img class="card-img" src="http://images.all-free-download.com/images/graphiclarge/hand_drawn_dogs_vector_set_538626.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
-                    <div class="card-footer text-white">
-                        Not a hand written number - nice dog though!
-                    </div>
-                </div>
-                <div class="card bg-warning border-dark text-white font-weight-bold text-center">
-                    <div class="card-header"><i class="fa fa-file-image-o" aria-hidden="true"></i> Sample Picture</div>
-                    <img class="card-img" src="https://st.depositphotos.com/2899123/3753/v/950/depositphotos_37532053-stock-illustration-9-black-handwritten-number-on.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">                    
-                    <div class="card-footer text-white">
-                        Picture Rendered, Image shows number {{9}}
+                    <div class="card-footer">
+                        
+                        <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
+                        
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button class="btn btn-sm btn-success"> Correct </button>
+                            <button class="btn btn-sm btn-danger"> Incorrect </button>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
+                            <div class="input-group-addon bg-white">
+                                <button class="btn btn-success" id="correctAnswer01">
+                                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <!-- <button class="input-group-addon btn btn-inverse" id="correctAnswer01">
+                                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                            </button> -->
+                        </div>
+
+                        <p class="text-success">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way. Feel free to try it again, and again, and again..!</p>
                     </div>
                 </div>
             </div>

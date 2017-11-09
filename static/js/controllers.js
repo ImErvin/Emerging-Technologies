@@ -1,31 +1,43 @@
 angular.module('app.controllers', [])
 
 .controller('mainCtrl', function($scope, APIFactory) {
-    var uploadFromFile;
-    var uploadFromURL;
-    var uploadOptions = [true,false];
 
-    function message(){
-        APIFactory.response.getImage().then(function(data){
-            console.log(data);
-        });
-    }
+    var uploadOption = [true,false,false]; // 0 from URL, 1 from File, 2 from Canvas
+    var imageUrl = undefined;
+    var rendered = {
+        fileName: "sampleImage.jpg",
+        message: "Image was processed successfully.",
+        icon: "fa fa-smile-o",
+        bgColor: "bg-success",
+        prediction: "9",
+    };
+    var incorrect;
 
-    function uploadFromFile(uploadMethod){
-        switch(uploadMethod){
+    function uploadOptionSelected(uploadoption){
+        console.log(uploadoption);
+        switch(uploadoption){
             case 0:
-                $scope.uploadOptions = [true,false];
+                $scope.uploadOption = [true,false,false];
+                break;
             case 1:
-                $scope.uploadOptions = [false,true];
+                $scope.uploadOption = [false, true, false];
+                break;
+            case 2:
+                $scope.uploadOption = [false, false, true];
+                break;
+            default:
+                $scope.uploadOption = [false,false,false];
+                break;
         }
     }
 
-    $scope.random = function(){
-        console.log("working");
+    function feedback(userFeedback){
+        console.log(userFeedback);
+        
     }
 
-    $scope.uploadFromFile = uploadFromFile;
-    $scope.uploadFromURL = uploadFromURL;
-    $scope.uploadOptions = uploadOptions;
-    $scope.message = message;
+    $scope.uploadOption = uploadOption;
+    $scope.imageUrl = imageUrl;
+    $scope.uploadOptionSelected = uploadOptionSelected;
+    $scope.rendered = rendered;
 });

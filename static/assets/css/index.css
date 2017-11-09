@@ -1,3 +1,7 @@
 .uploadButton{
     height: 100px !important;
 }
+/* Adapted from https://stackoverflow.com/questions/18133319/angularjs-hide-content-until-dom-loaded */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+  }

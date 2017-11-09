@@ -11,7 +11,9 @@ angular.module('app.controllers', [])
         bgColor: "bg-success",
         prediction: "9",
     };
-    var incorrect;
+    var feedbackButtons = true;
+    var predictionCorrection = false;
+    var feedbackSent = false;
 
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
@@ -32,7 +34,6 @@ angular.module('app.controllers', [])
     }
 
     function feedback(userFeedback){
-        console.log(userFeedback);
         
     }
 
@@ -40,4 +41,7 @@ angular.module('app.controllers', [])
     $scope.imageUrl = imageUrl;
     $scope.uploadOptionSelected = uploadOptionSelected;
     $scope.rendered = rendered;
+    $scope.feedbackButtons = feedbackButtons;
+    $scope.predictionCorrection = predictionCorrection;
+    $scope.feedbackSent = feedbackSent;
 });

@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-dark border-dark text-white text-center" ng-show="uploadOption[0]">
+                <div class="card bg-dark border-dark text-white text-center">
                     <div class="card-header font-weight-bold {{ rendered.bgColor }}" ><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
                     <div class="card-header font-weight-bold" >{{rendered.fileName}}</div>
                     <img class="card-img" src="https://st.depositphotos.com/2899123/3753/v/950/depositphotos_37532053-stock-illustration-9-black-handwritten-number-on.jpg" style="width:auto;height:auto;max-width:550px;max-height:350px;min-width:300px;min-height:300px;" alt="Card image">
@@ -90,24 +90,21 @@
                         
                         <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
                         
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button class="btn btn-sm btn-success"> Correct </button>
-                            <button class="btn btn-sm btn-danger"> Incorrect </button>
+                        <div class="btn-group" role="group" aria-label="Basic example" ng-show="feedbackButtons">
+                            <button class="btn btn-md btn-success" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
+                            <button class="btn btn-md btn-danger" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
                         </div>
 
-                        <div class="input-group">
+                        <div class="input-group animated fadeIn" ng-show="predictionCorrection">
                             <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
                             <div class="input-group-addon bg-white">
-                                <button class="btn btn-success" id="correctAnswer01">
+                                <button class="btn btn-success btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
                                     <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                                 </button>
                             </div>
-                            <!-- <button class="input-group-addon btn btn-inverse" id="correctAnswer01">
-                                <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                            </button> -->
                         </div>
 
-                        <p class="text-success">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way. Feel free to try it again, and again, and again..!</p>
+                        <p class="text-success animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way. Feel free to try it again, and again, and again..!</p>
                     </div>
                 </div>
             </div>

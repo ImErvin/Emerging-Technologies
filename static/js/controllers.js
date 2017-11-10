@@ -7,15 +7,21 @@ angular.module('app.controllers', [])
     var rendered = {
         fileName: "sampleImage.jpg",
         message: "Image was processed successfully.",
-        icon: "fa fa-smile-o",
-        bgColor: "customButtonBg",
+        icon: "fa fa-thumbs-up text-dark",
+        bgColor: "bg-secondary",
         prediction: "9",
     };
     var feedbackButtons = true;
     var predictionCorrection = false;
     var feedbackSent = false;
     var imageFile;
-
+    var canvas = document.getElementById("drawImageCanvas");
+    var ctx = canvas.getContext("2d");
+     // Set the fill colour to bright red.
+     ctx.fillStyle = "rgba(0, 0, 255,0.3)";
+     // Create a filled rectangle at co-ordinates (10,10)
+     // with height and width set to 100.
+     ctx.fillRect(10, 10, 150, 150);
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
         switch(uploadoption){
@@ -34,12 +40,9 @@ angular.module('app.controllers', [])
         }
     }
 
-    function feedback(userFeedback){
-        
-    }
-
     function uploadImage(file){
-        console.log(file)
+        $scope.rendered.fileName = file;
+        console.log(APIFactory.response.postImage(file));
     }
 
     $scope.uploadOption = uploadOption;
@@ -50,4 +53,5 @@ angular.module('app.controllers', [])
     $scope.predictionCorrection = predictionCorrection;
     $scope.feedbackSent = feedbackSent;
     $scope.uploadImage = uploadImage;
+    $scope.imageFile = imageFile;
 });

@@ -27,6 +27,7 @@ angular.module('app.services', [])
             var deferred = $q.defer();
             
             image = {
+                imageFileName: "imageFile1.png",
                 imageBase64: ""+user
             }
 

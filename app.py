@@ -1,3 +1,11 @@
+# 808 - Handwritten Recognition. Written by Ervin Mamutov - github.com/imervin
+
+
+# Adapted Code From -
+#   [1] Regular Expression Delete everything before - https://stackoverflow.com/questions/7793950/regex-to-remove-all-text-before-a-character
+#   [2] Regular Expression Delete everything after - https://stackoverflow.com/questions/19367373/regex-for-remove-everything-after-with
+#   []
+
 import os
 import flask
 from flask import Flask, request, redirect, url_for, json, jsonify
@@ -71,17 +79,21 @@ def homepage():
 @app.route('/uploadImage', methods=['GET','POST'])
 def uploadImage():
     if flask.request.method == 'POST':
-        data = request.data
+        data = request.json # Read the request.data (JSON from requqest)
         
-        dataRegex = re.sub('^[^_]*,', '', str(data))
-        dataRegex = re.sub('\"}.*$', '', str(dataRegex))
+        # The value of the imageBase64 key in the dictionary results in something like "data:image/png;base64,iVBOR.."
+        # I just want the "iVBOR.." part of the result above so I use a regular expression to remove everything before the ','.
+        dataRegex = re.sub('^[^_]*,', '', str(data['imageBase64'])) # [1]
+
+        # The above regular expression turned the base64 byte data from byte-like object to string.
+        # To use the base64.decodebytes function below, I must encode the string into bytes again.
         dataRegex = str.encode(dataRegex)
 
-        
-        #dataRegex = base64.b64encode(dataRegex)
-        with open("uploads/test1.png", "wb") as fh:
+        with open('uploads/'+data['imageFileName'], "wb") as fh:
             fh.write(base64.decodebytes(dataRegex))
-        return dataRegex
+        
+
+        return json.dumps(data)
     else:
         image = Image("sampleImage.jpg", "Image was processed successfully.", "fa fa-thumbs-up text-dark", "bg-success","9")
         return json.dumps(image)

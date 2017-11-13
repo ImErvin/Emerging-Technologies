@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/assets/css/index.css"/>
+    <link rel="stylesheet" href="/static/assets/css/index.css" />
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.css" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="/static/node_modules/font-awesome/css/font-awesome.css" />
 
     <!-- Animate.css CSS -->
-    <link rel="stylesheet" href="/static/node_modules/animate.css/animate.css"/>
+    <link rel="stylesheet" href="/static/node_modules/animate.css/animate.css" />
 </head>
 
 <body ng-app="app">
@@ -30,102 +30,108 @@
             </a>
         </nav>
         <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-inverse text-center" role="alert">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i> 808 is a handwriting recognition application - Simply upload a handwritten number and voila!
-                    <p>808 was trained and tested using the <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card-group text-center">
-                            <a class="card text-white bg-success text-white mb-3" ng-click="uploadOptionSelected(0)">
-                                <div class="card-header">
-                                    <p class="card-text"><i class="fa fa-file-image-o text-dark" aria-hidden="true"></i> File</p>
-                                </div>
-                            </a>
-                            <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(1)">
-                                <div class="card-header">
-                                    <p class="card-text"><i class="fa fa-link text-dark" aria-hidden="true"></i> URL</p>
-                                </div>
-                            </a>
-                            <a class="card text-white bg-secondary text-white mb-3" ng-click="uploadOptionSelected(2)">
-                                <div class="card-header">
-                                    <p class="card-text"><i class="fa fa-pencil text-dark" aria-hidden="true"></i> Canvas</p>
-                                </div>
-                            </a>
-                        </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-inverse text-center" role="alert">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> 808 is a handwriting recognition application
+                        - Simply upload a handwritten number and voila!
+                        <p>808 was trained and tested using the <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>.</p>
                     </div>
                 </div>
-                <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[2]">
+
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-group text-center">
+                                <a class="card text-white bg-success text-white mb-3" ng-click="uploadOptionSelected(0)">
+                                    <div class="card-header">
+                                        <p class="card-text"><i class="fa fa-file-image-o text-dark" aria-hidden="true"></i> File</p>
+                                    </div>
+                                </a>
+                                <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(1)">
+                                    <div class="card-header">
+                                        <p class="card-text"><i class="fa fa-link text-dark" aria-hidden="true"></i> URL</p>
+                                    </div>
+                                </a>
+                                <a class="card text-white bg-secondary text-white mb-3" ng-click="uploadOptionSelected(2)">
+                                    <div class="card-header">
+                                        <p class="card-text"><i class="fa fa-pencil text-dark" aria-hidden="true"></i> Canvas</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[2]">
                         <div class="card-header">Upload Drawn Image</div>
                         <div class="card-body text-center">
                             <canvas id="drawImageCanvas">
-                                
+
                             </canvas>
                             <!-- <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button> -->
                         </div>
                     </div>
-                <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[0]">
-                    <div class="card-header">Upload Image from File</div>
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="fileInput01">Example file input</label>
-                                <input enctype="multipart/form-data" type="file" class="form-control-file" fileread="imageFile" aria-describedby="fileInputHelp" id="fileInput01">
-                                <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
-                            </div>
-                        </form>
-                        <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
-                    </div>
-                </div>
-
-                <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[1]">
-                    <div class="card-header">Upload Image from URL</div>
-                    <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="urlInput01">Image URL</label>
-                                <input type="text" ng-model="imageUrl" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
-                                <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
-                            </div>
-                        </form>
-                        <button class="btn btn-inverse text-white btn-success btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card text-white bg-dark border-dark text-center card-shadow">
-                    <div class="card-header font-weight-bold text-white {{ rendered.bgColor }}" ><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
-                    <div class="card-header font-weight-bold" >{{rendered.fileName}}</div>
-                    <img class="card-img bg-secondary cardImage" src="{{imageFile}}" alt="The image will be shown here.">
-                    <div class="card-footer">
-                            
-                        <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
-                        
-                        <div class="btn-group" role="group" aria-label="Basic example" ng-show="feedbackButtons">
-                            <button class="btn btn-md btn-inverse text-white btn-success" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
-                            <button class="btn btn-md btn-secondary" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
+                    <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[0]">
+                        <div class="card-header">Upload Image from File</div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="fileInput01">Example file input</label>
+                                    <input enctype="multipart/form-data" type="file" class="form-control-file" fileread="imageFile" aria-describedby="fileInputHelp"
+                                        id="fileInput01">
+                                    <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
+                                </div>
+                            </form>
+                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
+                    </div>
 
-                        <div class="input-group animated fadeIn" ng-show="predictionCorrection">
-                            <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
-                            <div class="input-group-addon bg-white">
-                                <button class="btn btn-inverse text-white btn-success btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
+                    <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[1]">
+                        <div class="card-header">Upload Image from URL</div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="urlInput01">Image URL</label>
+                                    <input type="text" ng-model="imageUrl" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
+                                    <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
+                                </div>
+                            </form>
+                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card text-white bg-dark border-dark text-center card-shadow">
+                        <div ng-if="rendered.bgColor && rendered.icon && rendered.message" class="card-header font-weight-bold text-white {{ rendered.bgColor }}"><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
+                        <div ng-if="!rendered.bgColor && !rendered.icon && !rendered.message" class="card-header font-weight-bold text-white bg-info"><i class="fa fa-info-circle text-dark" aria-hidden="true"></i> Make sure to upload an image!</div>                        
+                        <div ng-if="rendered.fileName" class="card-header font-weight-bold">{{rendered.fileName}}</div>
+                        <div ng-if="!rendered.fileName" class="card-header font-weight-bold">noimage.png</div>                        
+                        <img class="card-img bg-secondary cardImage" src="{{displayImageFile}}" alt="The image will be shown here.">
+                        <div class="card-footer">
+                            <div ng-if="rendered.prediction">
+                                <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
+
+                                <div class="btn-group" role="group" aria-label="Basic example" ng-show="feedbackButtons">
+                                    <button class="btn btn-md btn-inverse text-white btn-success" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
+                                    <button class="btn btn-md btn-secondary" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
+                                </div>
+
+                                <div class="input-group animated fadeIn" ng-show="predictionCorrection">
+                                    <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
+                                    <div class="input-group-addon bg-white">
+                                        <button class="btn btn-inverse text-white btn-success btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
                                     <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                                 </button>
+                                    </div>
+                                </div>
+
+                                <p class="text-success animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way.
+                                    Feel free to try it again, and again, and again..!</p>
                             </div>
                         </div>
-
-                        <p class="text-success animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way. Feel free to try it again, and again, and again..!</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Import AngularJS, then scripts -->
@@ -134,7 +140,7 @@
     <script src="/static/js/controllers.js"></script>
     <script src="/static/js/services.js"></script>
     <script src="/static/js/directives.js"></script>
-    
+
 </body>
 
 </html>

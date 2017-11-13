@@ -38,7 +38,7 @@ class Image(object):
     
     def serialize(self):
         return{
-            'imageName':self.fileName,
+            'fileName':self.fileName,
             'message':self.message,
             'icon':self.icon,
             'bgColor':self.bgColor,
@@ -92,8 +92,9 @@ def uploadImage():
         with open('uploads/'+data['imageFileName'], "wb") as fh:
             fh.write(base64.decodebytes(dataRegex))
         
+        image = Image(data['imageFileName'], "Image was saved successfully", "fa fa-thumbs-up text-dark", "bg-success", "9")
 
-        return json.dumps(data)
+        return json.dumps(image.serialize())
     else:
         image = Image("sampleImage.jpg", "Image was processed successfully.", "fa fa-thumbs-up text-dark", "bg-success","9")
         return json.dumps(image)

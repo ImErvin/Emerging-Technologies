@@ -5,16 +5,17 @@ angular.module('app.controllers', [])
     var uploadOption = [true,false,false]; // 0 from URL, 1 from File, 2 from Canvas
     var imageUrl = undefined;
     var rendered = {
-        fileName: "sampleImage.jpg",
-        message: "Image was processed successfully.",
-        icon: "fa fa-thumbs-up text-dark",
-        bgColor: "bg-success",
-        prediction: "9",
+        fileName: null,
+        message: null,
+        icon: null,
+        bgColor: null,
+        prediction: null,
     };
     var feedbackButtons = true;
     var predictionCorrection = false;
     var feedbackSent = false;
     var imageFile;
+    var displayImageFile;
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
     canvas.height = canvas.height+100;
@@ -42,8 +43,10 @@ angular.module('app.controllers', [])
     }
 
     function uploadImage(file){
-        $scope.rendered.fileName = file;
-        console.log(APIFactory.response.postImage($scope.imageFile));
+        APIFactory.response.postImage($scope.imageFile).then(function(data) {
+            $scope.displayImageFile = $scope.imageFile;
+            $scope.rendered = data.data;
+        });
     }
 
     $scope.uploadOption = uploadOption;
@@ -55,4 +58,5 @@ angular.module('app.controllers', [])
     $scope.feedbackSent = feedbackSent;
     $scope.uploadImage = uploadImage;
     $scope.imageFile = imageFile;
+    $scope.displayImageFile = displayImageFile;
 });

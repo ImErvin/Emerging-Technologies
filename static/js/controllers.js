@@ -8,7 +8,7 @@ angular.module('app.controllers', [])
         fileName: "sampleImage.jpg",
         message: "Image was processed successfully.",
         icon: "fa fa-thumbs-up text-dark",
-        bgColor: "bg-secondary",
+        bgColor: "bg-success",
         prediction: "9",
     };
     var feedbackButtons = true;
@@ -17,11 +17,12 @@ angular.module('app.controllers', [])
     var imageFile;
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
+    canvas.height = canvas.height+100;
      // Set the fill colour to bright red.
-     ctx.fillStyle = "rgba(0, 0, 255,0.3)";
+     ctx.fillStyle = "whitesmoke";
      // Create a filled rectangle at co-ordinates (10,10)
      // with height and width set to 100.
-     ctx.fillRect(10, 10, 150, 150);
+     ctx.fillRect(0, 0, canvas.width, canvas.height);
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
         switch(uploadoption){
@@ -42,7 +43,7 @@ angular.module('app.controllers', [])
 
     function uploadImage(file){
         $scope.rendered.fileName = file;
-        console.log(APIFactory.response.postImage(file));
+        console.log(APIFactory.response.postImage($scope.imageFile));
     }
 
     $scope.uploadOption = uploadOption;

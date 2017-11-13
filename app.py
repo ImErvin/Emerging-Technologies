@@ -2,6 +2,9 @@ import os
 import flask
 from flask import Flask, request, redirect, url_for, json, jsonify
 from werkzeug.utils import secure_filename
+import base64
+from base64 import decodestring
+import re
 
 UPLOAD_FOLDER = './static/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -70,7 +73,15 @@ def uploadImage():
     if flask.request.method == 'POST':
         data = request.data
         
-        return data
+        dataRegex = re.sub('^[^_]*,', '', str(data))
+        dataRegex = re.sub('\"}.*$', '', str(dataRegex))
+        dataRegex = str.encode(dataRegex)
+
+        
+        #dataRegex = base64.b64encode(dataRegex)
+        with open("uploads/test1.png", "wb") as fh:
+            fh.write(base64.decodebytes(dataRegex))
+        return dataRegex
     else:
         image = Image("sampleImage.jpg", "Image was processed successfully.", "fa fa-thumbs-up text-dark", "bg-success","9")
         return json.dumps(image)

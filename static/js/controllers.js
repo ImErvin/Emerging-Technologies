@@ -18,12 +18,14 @@ angular.module('app.controllers', [])
     var displayImageFile;
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
-    canvas.height = canvas.height+100;
-     // Set the fill colour to bright red.
-     ctx.fillStyle = "whitesmoke";
-     // Create a filled rectangle at co-ordinates (10,10)
-     // with height and width set to 100.
-     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+    function setUpCanvas(){
+        canvas.height = canvas.height+100;
+        ctx.fillStyle = "whitesmoke";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
         switch(uploadoption){
@@ -34,6 +36,7 @@ angular.module('app.controllers', [])
                 $scope.uploadOption = [false, true, false];
                 break;
             case 2:
+                setUpCanvas();
                 $scope.uploadOption = [false, false, true];
                 break;
             default:
@@ -42,12 +45,34 @@ angular.module('app.controllers', [])
         }
     }
 
-    function uploadImage(file){
-        APIFactory.response.postImage($scope.imageFile).then(function(data) {
-            $scope.displayImageFile = $scope.imageFile;
+    function uploadFromUrl(url){
+        var image = new Image();
+        APIFactory.response.getImage(url).then(function(data) {
+            image = data.data;
+            $scope.displayImageFile = image;
+        });
+    }
+
+    function uploadFromFile(file){
+        uploadImage(file);
+    }
+
+    function uploadFromCanvas(){
+        var pngUrl = canvas.toDataURL();
+        uploadImage(pngUrl);
+    }
+
+    function uploadImage(base64){
+        $scope.displayImageFile = $scope.imageFile;
+        APIFactory.response.postImage(base64).then(function(data) {
+            $scope.displayImageFile = base64;
             $scope.rendered = data.data;
         });
     }
+
+    $scope.uploadFromFile = uploadFromFile;
+    $scope.uploadFromUrl = uploadFromUrl;
+    $scope.uploadFromCanvas = uploadFromCanvas;
 
     $scope.uploadOption = uploadOption;
     $scope.imageUrl = imageUrl;
@@ -56,7 +81,6 @@ angular.module('app.controllers', [])
     $scope.feedbackButtons = feedbackButtons;
     $scope.predictionCorrection = predictionCorrection;
     $scope.feedbackSent = feedbackSent;
-    $scope.uploadImage = uploadImage;
     $scope.imageFile = imageFile;
     $scope.displayImageFile = displayImageFile;
 });

@@ -80,7 +80,7 @@ def homepage():
 def uploadImage():
     if flask.request.method == 'POST':
         data = request.json # Read the request.data (JSON from requqest)
-        
+        print(data)
         # The value of the imageBase64 key in the dictionary results in something like "data:image/png;base64,iVBOR.."
         # I just want the "iVBOR.." part of the result above so I use a regular expression to remove everything before the ','.
         dataRegex = re.sub('^[^_]*,', '', str(data['imageBase64'])) # [1]

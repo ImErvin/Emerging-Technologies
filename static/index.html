@@ -48,12 +48,12 @@
                                         <p class="card-text"><i class="fa fa-file-image-o text-dark" aria-hidden="true"></i> File</p>
                                     </div>
                                 </a>
-                                <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(1)">
+                                <!-- <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(1)">
                                     <div class="card-header">
                                         <p class="card-text"><i class="fa fa-link text-dark" aria-hidden="true"></i> URL</p>
                                     </div>
-                                </a>
-                                <a class="card text-white bg-secondary text-white mb-3" ng-click="uploadOptionSelected(2)">
+                                </a> -->
+                                <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(2)">
                                     <div class="card-header">
                                         <p class="card-text"><i class="fa fa-pencil text-dark" aria-hidden="true"></i> Canvas</p>
                                     </div>
@@ -64,10 +64,10 @@
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[2]">
                         <div class="card-header">Upload Drawn Image</div>
                         <div class="card-body text-center">
-                            <canvas id="drawImageCanvas">
+                            <canvas id="drawImageCanvas" drawing>
 
                             </canvas>
-                            <!-- <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button> -->
+                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromCanvas()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
                     </div>
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[0]">
@@ -81,7 +81,7 @@
                                     <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
                                 </div>
                             </form>
-                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadImage(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromFile(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                                     <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
                                 </div>
                             </form>
-                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="urlUpload(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromUrl(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
                     </div>
                 </div>

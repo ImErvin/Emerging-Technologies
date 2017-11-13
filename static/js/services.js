@@ -4,14 +4,14 @@ angular.module('app.services', [])
 
         var response = {};
 
-        response.getImage = function () {
+        response.getImage = function (url) {
             var deferred = $q.defer();
-            url = 123;
+
             $http({
                 method: 'GET',
-                url: 'http://127.0.0.1:5000/uploadImage',
+                url: ''+url,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'image/png'
                 },
             }).then(function success(response) {
                 deferred.resolve(response)
@@ -21,7 +21,6 @@ angular.module('app.services', [])
 
             return deferred.promise;
         }
-
 
         response.postImage = function(user) {
             var deferred = $q.defer();
@@ -54,5 +53,6 @@ angular.module('app.services', [])
             response: response
         }
 
+    
     });
 

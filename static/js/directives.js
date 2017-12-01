@@ -1,4 +1,6 @@
 angular.module('app.directives', [])
+
+// Ripped from https://stackoverflow.com/questions/17063000/ng-model-for-input-type-file
 .directive("fileread", [function () {
     return {
         scope: {
@@ -18,11 +20,14 @@ angular.module('app.directives', [])
         }
     }
 }])
+
+// Ripped from https://stackoverflow.com/questions/16587961/is-there-already-a-canvas-drawing-directive-for-angularjs-out-there
 .directive("drawing", function(){
     return {
       restrict: "A",
       link: function(scope, element){
         var ctx = element[0].getContext('2d');
+        
   
         // variable that decides if something should be drawn on mousemove
         var drawing = false;
@@ -30,7 +35,7 @@ angular.module('app.directives', [])
         // the last coordinates before the current move
         var lastX;
         var lastY;
-  
+
         element.bind('mousedown', function(event){
           if(event.offsetX!==undefined){
             lastX = event.offsetX;
@@ -70,22 +75,24 @@ angular.module('app.directives', [])
         });
   
         // canvas reset
-        function reset(){
-         element[0].width = element[0].width; 
-        }
+        // function reset(){
+        //  element[0].width = element[0].width; 
+        // }
   
         function draw(lX, lY, cX, cY){
+          ctx.lineWidth=5;
           // line from
           ctx.moveTo(lX,lY);
           // to
           ctx.lineTo(cX,cY);
           // color
-          ctx.strokeStyle = "#4bf";
+          ctx.strokeStyle = "white";
           // draw it
+
+          ctx.fillRect(0, 0, element[0].width, element[0].height);
           ctx.stroke();
         }
       }
     };
   });
 
-// Adapated from https://stackoverflow.com/questions/16587961/is-there-already-a-canvas-drawing-directive-for-angularjs-out-there

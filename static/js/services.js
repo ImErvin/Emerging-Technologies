@@ -4,30 +4,12 @@ angular.module('app.services', [])
 
         var response = {};
 
-        response.getImage = function (url) {
-            var deferred = $q.defer();
-
-            $http({
-                method: 'GET',
-                url: ''+url,
-                headers: {
-                    'Content-Type': 'image/png'
-                },
-            }).then(function success(response) {
-                deferred.resolve(response)
-            }).catch(function (error) {
-                deferred.reject(error);
-            });
-
-            return deferred.promise;
-        }
-
-        response.postImage = function(user) {
+        response.postImage = function(base64) {
             var deferred = $q.defer();
             
             image = {
                 imageFileName: "imageFile1.png",
-                imageBase64: ""+user
+                imageBase64: ""+base64
             }
 
             user = JSON.stringify(image);
@@ -45,7 +27,7 @@ angular.module('app.services', [])
             }).catch(function(error) {
                 deferred.reject(error);
             });
-
+            console.log(deferred.promise);
             return deferred.promise;
         }
 

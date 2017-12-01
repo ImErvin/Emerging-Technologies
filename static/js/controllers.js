@@ -2,7 +2,7 @@ angular.module('app.controllers', [])
 
 .controller('mainCtrl', function($scope, APIFactory) {
 
-    var uploadOption = [true,false,false]; // 0 from URL, 1 from File, 2 from Canvas
+    var uploadOption = [true,false]; // 0 from URL, 1 from File, 2 from Canvas
     var imageUrl = undefined;
     var rendered = {
         fileName: null,
@@ -16,53 +16,59 @@ angular.module('app.controllers', [])
     var feedbackSent = false;
     var imageFile;
     var displayImageFile;
+    var canvasTouched = false;
+    var message;
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
-
+    canvas.height = canvas.height+100;
 
     function setUpCanvas(){
-        canvas.height = canvas.height+100;
-        ctx.fillStyle = "whitesmoke";
+        ctx.fillStyle = "Black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
     
     function uploadOptionSelected(uploadoption){
         console.log(uploadoption);
+        $scope.message = undefined;
         switch(uploadoption){
             case 0:
-                $scope.uploadOption = [true,false,false];
+                $scope.uploadOption = [true,false];
                 break;
             case 1:
-                $scope.uploadOption = [false, true, false];
-                break;
-            case 2:
                 setUpCanvas();
-                $scope.uploadOption = [false, false, true];
+                $scope.canvasTouched = false;
+                $scope.message = undefined;
+                $scope.uploadOption = [false, true];
                 break;
             default:
-                $scope.uploadOption = [false,false,false];
+                $scope.uploadOption = [true,false];
                 break;
         }
     }
 
-    function uploadFromUrl(url){
-        var image = new Image();
-        APIFactory.response.getImage(url).then(function(data) {
-            image = data.data;
-            $scope.displayImageFile = image;
-        });
-    }
-
     function uploadFromFile(file){
-        uploadImage(file);
+        if(file){
+            uploadImage(file);
+            $scope.message = undefined;
+        }else{
+            $scope.message = "Upload an image before uploading!"
+        }
+        
     }
 
     function uploadFromCanvas(){
-        var pngUrl = canvas.toDataURL();
-        uploadImage(pngUrl);
+        if($scope.canvasTouched){
+            var pngUrl = canvas.toDataURL();
+            uploadImage(pngUrl);
+            $scope.message = undefined;
+        }else{
+            $scope.message = "Draw on the canvas before uploading!"
+        }
+        
     }
 
     function uploadImage(base64){
+        resetFeedback();
         $scope.displayImageFile = $scope.imageFile;
         APIFactory.response.postImage(base64).then(function(data) {
             $scope.displayImageFile = base64;
@@ -70,8 +76,29 @@ angular.module('app.controllers', [])
         });
     }
 
+    function feedback(correct){
+        if(correct){
+            $scope.feedbackButtons = false;
+            $scope.feedbackSent = true;
+        }else{
+            $scope.feedbackButtons = false;
+            $scope.predictionCorrection = true;
+        }
+    }
+
+    function actualNumberFeedBack(){
+        $scope.predictionCorrection = false;
+        $scope.feedbackSent = true;
+    }
+
+    function resetFeedback(){
+        $scope.feedbackButtons = true;
+        $scope.predictionCorrection = false;
+        $scope.feedbackSent = false;
+        $scope.predictionCorrection = false;
+    }
+
     $scope.uploadFromFile = uploadFromFile;
-    $scope.uploadFromUrl = uploadFromUrl;
     $scope.uploadFromCanvas = uploadFromCanvas;
 
     $scope.uploadOption = uploadOption;
@@ -83,4 +110,8 @@ angular.module('app.controllers', [])
     $scope.feedbackSent = feedbackSent;
     $scope.imageFile = imageFile;
     $scope.displayImageFile = displayImageFile;
+    $scope.canvasTouched = canvasTouched;
+    $scope.message = message;
+    $scope.feedback = feedback;
+    $scope.actualNumberFeedBack = actualNumberFeedBack;
 });

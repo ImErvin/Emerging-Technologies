@@ -10,10 +10,30 @@
     box-shadow: 5px 5px 15px grey;
 }
 
+/* Backgrounds generated using https://uigradients.com/ */
+
 body{
-    background: #ECE9E6;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+}
+
+.bg-custom{
+  background: #D31027;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #EA384D, #D31027);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #EA384D, #D31027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+} 
+
+.card.bg-custom:hover{
+  background: #be0e23;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #e71830, #be0e23);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #e71830, #be0e23); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+}
+
+.canvasColor{
+  background: black !important;
+  border:3px dashed #000000; 
+  margin-bottom: 15px;
 }
 
 .cardImage{
@@ -25,6 +45,7 @@ body{
     min-height:300px;
 }
 
+/* Ribbon adapted from https://css-tricks.com/snippets/css/corner-ribbon/ */
 .wrapper {
     margin: 50px auto;
     width: 280px;
@@ -61,9 +82,9 @@ body{
     left: -5px;
     top: 15px;
     width: 120px;
-    background-color: #AA076B;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#FF512F), to(#DD2476)); 
-    background-image: -webkit-linear-gradient(top, #FF512F, #DD2476); 
+    background-color: #D31027;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#D31027), to(#EA384D)); 
+    background-image: -webkit-linear-gradient(top, #D31027, #EA384D); 
     background-image:    -moz-linear-gradient(top, #BFDC7A, #8EBF45); 
     background-image:     -ms-linear-gradient(top, #BFDC7A, #8EBF45); 
     background-image:      -o-linear-gradient(top, #BFDC7A, #8EBF45); 

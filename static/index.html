@@ -19,120 +19,181 @@
     <link rel="stylesheet" href="/static/node_modules/animate.css/animate.css" />
 </head>
 
+<!-- Set up the angular app by adding ng-app to the body of this page -->
+<!-- Start of body -->
+
 <body ng-app="app">
-    <div ng-controller="mainCtrl" class="animated fadeIn" ng-cloak>
-        <nav class="navbar navbar-dark bg-dark mb-1 customBg ">
+    <!-- Add the main controller "mainCtrl" to the div containing all the code and ng-cloak it to wait for everything to load before displaying -->
+    <!-- Start of mainDiv -->
+    <div ng-controller="mainCtrl" class="animated fadeIn" id="mainDiv" ng-cloak>
+
+        <!-- Start of Navbar-->
+        <nav class="navbar navbar-dark bg-dark mb-1 card-shadow">
+            <!-- Add a ribbon with a link my to Github -->
             <div class="ribbon-wrapper-green">
                 <div class="ribbon-green"><a href="https://github.com/imervin" class="text-white"><i class="fa fa-github-alt fa-lg"></i></a></div>
             </div>
+            <!-- Add the image brand logo -->
             <a class="mx-auto" href="#">
                 <img src="/static/assets/logogw.png" width="70" height="35" class="d-inline-block align-top" alt="logo">
             </a>
         </nav>
-        <div class="container">
+        <!-- End of Navbar -->
+
+        <!-- Start of mainContainer -->
+        <div class="container" id="mainContainer">
+            <!-- Start of row -->
             <div class="row">
-                <div class="col-lg-12">
+                <!-- Start of col-12 -->
+                <div class="col-md-12">
+                    <!-- Little bit of information about the application (like an about page but significantly smaller) -->
                     <div class="alert alert-inverse text-center" role="alert">
+                        <br/>
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 808 is a handwriting recognition application
                         - Simply upload a handwritten number and voila!
                         <p>808 was trained and tested using the <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>.</p>
                     </div>
                 </div>
+                <!-- End of col-12 -->
 
-                <div class="col-lg-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-group text-center">
-                                <a class="card text-white bg-success text-white mb-3" ng-click="uploadOptionSelected(0)">
-                                    <div class="card-header">
-                                        <p class="card-text"><i class="fa fa-file-image-o text-dark" aria-hidden="true"></i> File</p>
-                                    </div>
-                                </a>
-                                <!-- <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(1)">
-                                    <div class="card-header">
-                                        <p class="card-text"><i class="fa fa-link text-dark" aria-hidden="true"></i> URL</p>
-                                    </div>
-                                </a> -->
-                                <a class="card text-white bg-info text-white mb-3" ng-click="uploadOptionSelected(2)">
-                                    <div class="card-header">
-                                        <p class="card-text"><i class="fa fa-pencil text-dark" aria-hidden="true"></i> Canvas</p>
-                                    </div>
-                                </a>
+                <!-- Start of col-6 -->
+                <div class="col-md-6">
+                    <!-- Start of card group -->
+                    <div class="card-group text-center">
+                        <!-- Upload from file card - changes uploadOption to = [true,false] -->
+                        <a class="card text-white bg-dark mb-3" ng-click="uploadOptionSelected(0)">
+                            <div class="card-header">
+                                <p class="card-text"><i class="fa fa-file-image-o text-secondary" aria-hidden="true"></i> File</p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[2]">
-                        <div class="card-header">Upload Drawn Image</div>
-                        <div class="card-body text-center">
-                            <canvas id="drawImageCanvas" drawing>
+                        </a>
 
-                            </canvas>
-                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromCanvas()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
-                        </div>
+                        <!-- Upload from file card - changes uploadOption to = [false,true] -->
+                        <a class="card text-white bg-custom mb-3" ng-click="uploadOptionSelected(1)">
+                            <div class="card-header">
+                                <p class="card-text"><i class="fa fa-pencil text-dark" aria-hidden="true"></i> Canvas</p>
+                            </div>
+                        </a>
                     </div>
+                    <!-- End of card group -->
+
+                    <!-- Start of file card -->
+                    <!-- Only shown if uploadOption[0] is true -->
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[0]">
                         <div class="card-header">Upload Image from File</div>
-                        <div class="card-body">
+                        <div class="card-body bg-custom text-white">
+                            <!-- Error message -->
+                            <p class="text-white animated bounceIn text-center" ng-if="message">{{message}}</p>
+                            <!-- Start of form -->
                             <form>
                                 <div class="form-group">
                                     <label for="fileInput01">Example file input</label>
+                                    <!-- fileread directive to capture this element and retrieve the base64 of the the image and set the value of it to imageFile -->
                                     <input enctype="multipart/form-data" type="file" class="form-control-file" fileread="imageFile" aria-describedby="fileInputHelp"
                                         id="fileInput01">
-                                    <small id="fileInputHelp" class="form-text text-muted">Use the "Choose File" button above to select an image to upload and process.</small>
+                                    <small id="fileInputHelp" class="form-text text-white">Use the "Choose File" button above to select an image to upload and process.</small>
                                 </div>
                             </form>
-                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromFile(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                            <!-- End of form -->
+
+                            <!-- Submit button passes in the imageFile -->
+                            <button class="btn btn-inverse text-white btn-dark btn-block" ng-click="uploadFromFile(imageFile)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
                     </div>
+                    <!-- End of file card -->
 
+                    <!-- Start of canvas card -->
+                    <!-- Only shown if uploadOption[1] is true -->
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[1]">
-                        <div class="card-header">Upload Image from URL</div>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="urlInput01">Image URL</label>
-                                    <input type="text" ng-model="imageUrl" class="form-control" id="urlInput01" aria-describedby="urlInputHelp" placeholder="http://example.com/example-image.png">
-                                    <small id="urlInputHelp" class="form-text text-muted">Right click on an image anywhere on the web and choose "Copy Image URL". Paste into the input above.</small>
-                                </div>
-                            </form>
-                            <button class="btn btn-inverse text-white btn-success btn-block" ng-click="uploadFromUrl(imageUrl)"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
+                        <div class="card-header">Upload Image from Canvas</div>
+                        <div class="card-body text-center bg-custom">
+                            <!-- Error message -->
+                            <p class="text-white animated bounceIn" ng-if="message">{{message}}</p>
+                            <!-- Create canvas and add drawing directive to enable drawing | mousedown event to mimic dirty/pristine conditioning for the error message -->
+                            <canvas id="drawImageCanvas" drawing class="canvasColor" ng-mousedown="canvasTouched = true">
+
+                            </canvas>
+                            <!-- Submit button -->
+                            <button class="btn btn-inverse text-white btn-dark btn-block" ng-click="uploadFromCanvas()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Submit</button>
                         </div>
                     </div>
+                    <!-- End of canvas caard -->
                 </div>
+                <!-- End of col-6 -->
+
+                <!-- Start of col-6 -->
                 <div class="col-md-6">
-                    <div class="card text-white bg-dark border-dark text-center card-shadow">
-                        <div ng-if="rendered.bgColor && rendered.icon && rendered.message" class="card-header font-weight-bold text-white {{ rendered.bgColor }}"><i class="{{rendered.icon}}" aria-hidden="true"></i> {{ rendered.message }}</div>
-                        <div ng-if="!rendered.bgColor && !rendered.icon && !rendered.message" class="card-header font-weight-bold text-white bg-info"><i class="fa fa-info-circle text-dark" aria-hidden="true"></i> Make sure to upload an image!</div>                        
+                    <div class="card text-white border-dark bg-dark text-center card-shadow">
+                        <!-- Card header changes to filename when user uploads -->
                         <div ng-if="rendered.fileName" class="card-header font-weight-bold">{{rendered.fileName}}</div>
-                        <div ng-if="!rendered.fileName" class="card-header font-weight-bold">noimage.png</div>                        
-                        <img class="card-img bg-secondary cardImage" src="{{displayImageFile}}" alt="The image will be shown here.">
-                        <div class="card-footer">
+                        <div ng-if="!rendered.fileName" class="card-header font-weight-bold">placeholderimg.png</div>
+                        <!-- Card image changes to base64 of the canvas or image uploaded -->
+                        <img ng-if="displayImageFile" class="card-img bg-dark cardImage" src="{{displayImageFile}}" alt="The image will be shown here.">
+                        <img ng-if="!displayImageFile" class="card-img bg-white cardImage" src="/static/assets/placeholderimg.png" alt="The image will be shown here.">
+
+                        <div class="card-footer bg-dark">
+                            <!-- Will show if there has been a prediction made from server -->
                             <div ng-if="rendered.prediction">
-                                <p>808 predicts the number is <span class="lead text-warning">{{rendered.prediction}}</span>.</p>
+                                <!-- Print out prediction from server -->
+                                <h1><span class="badge badge-dark bg-custom text-white">{{rendered.prediction}}</span></h1>
 
-                                <div class="btn-group" role="group" aria-label="Basic example" ng-show="feedbackButtons">
-                                    <button class="btn btn-md btn-inverse text-white btn-success" ng-click="feedbackSent = true; feedbackButtons = false;"> Correct </button>
-                                    <button class="btn btn-md btn-secondary" ng-click="predictionCorrection = true; feedbackButtons = false;"> Incorrect </button>
+                                <!-- Two progress bars for Accuracy and Loss -->
+                                <!-- Start of progress bars -->
+                                <!-- <small class="text-white">Accuracy</small>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 98.5%" aria-valuenow="98.5" aria-valuemin="0"
+                                        aria-valuemax="100">98.5%</div>
                                 </div>
+                                <small class="text-white">Loss</small>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 98.5%" aria-valuenow="98.5" aria-valuemin="0"
+                                        aria-valuemax="100">98.5%</div>
+                                </div> -->
+                                <!-- End of progress bars -->
+                                <br/>
 
+                                <!-- Will only show if feedbackButtons is true -->
+                                <!-- Start of feedback buttons -->
+                                <div class="row" ng-show="feedbackButtons">
+                                    <div class="col-md-6">
+                                        <!-- Will set feedbackSent to true and feedbackButtons to false -->
+                                        <button class="btn btn-md btn-block text-dark btn-warning" ng-click="feedback(true)"><i class="fa fa-thumbs-up"></i> Correct</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- Will set predictionCorrection to true and feedbackButtons to false -->
+                                        <button class="btn btn-md btn-block text-dark btn-warning" ng-click="feedback(false)"><i class="fa fa-thumbs-down"></i> Incorrect</button>
+                                    </div>
+                                </div>
+                                <!-- End of feedback buttons -->
+
+                                <!-- Helper message only shown if feedbackButtons is true -->
+                                <small id="fileInputHelp" class="form-text text-white" ng-show="feedbackButtons">Use the buttons above to let 808 know if the prediction is correct or incorrect!</small>
+                                
+                                <!-- An input box to enter actual number displayed, only shown if predictionCorrection is true -->
                                 <div class="input-group animated fadeIn" ng-show="predictionCorrection">
-                                    <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01">
+
+                                    <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01" min="0" max="9">
                                     <div class="input-group-addon bg-white">
-                                        <button class="btn btn-inverse text-white btn-success btn-sm" id="correctAnswer01" ng-click="predictionCorrection = false; feedbackSent = true;">
-                                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                </button>
+                                        <button class="btn btn-inverse text-white btn-dark btn-sm" id="correctAnswer01" ng-click="actualNumberFeedBack()">
+                                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                                        </button>
                                     </div>
                                 </div>
 
-                                <p class="text-success animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a long way.
-                                    Feel free to try it again, and again, and again..!</p>
+                                <!-- Thank you message only shown if feedbackSent is true -->
+                                <small class="text-white animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a
+                                            long way. Feel free to try it again, and again, and again..!</small>
+
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End of col-6 -->
             </div>
+            <!-- End of row -->
         </div>
+        <!-- End of mainContainer -->
     </div>
+    <!-- End of mainDiv -->
 
     <!-- Import AngularJS, then scripts -->
     <script src="/static/node_modules/angular/angular.js"></script>

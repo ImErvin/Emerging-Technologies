@@ -1,4 +1,3 @@
-## Emerging Technologies Project
-### Tensorflow hand writing recognition
-##### Written by Ervin Mamutov
-<hr/>
+# Emerging Technologies Project
+## 808 is a handwriting recognition application
+###### Written by Ervin Mamutov

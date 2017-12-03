@@ -104,7 +104,7 @@
                     <!-- Only shown if uploadOption[1] is true -->
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[1]">
                         <div class="card-header">Upload Image from Canvas
-                            <button class="btn btn-primary pull-right btn-sm" ng-click="setUpCanvas()"><i class="fa fa-refresh"></i></button>
+                            <button class="btn btn-dark pull-right btn-sm" ng-click="setUpCanvas()"><i class="fa fa-refresh"></i></button>
                         </div>
                         <div class="card-body text-center bg-custom">
                             <!-- Error message -->
@@ -136,20 +136,6 @@
                             <div ng-if="rendered.prediction">
                                 <!-- Print out prediction from server -->
                                 <h1><span class="badge badge-dark bg-custom text-white">{{rendered.prediction}}</span></h1>
-
-                                <!-- Two progress bars for Accuracy and Loss -->
-                                <!-- Start of progress bars -->
-                                <!-- <small class="text-white">Accuracy</small>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 98.5%" aria-valuenow="98.5" aria-valuemin="0"
-                                        aria-valuemax="100">98.5%</div>
-                                </div>
-                                <small class="text-white">Loss</small>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 98.5%" aria-valuenow="98.5" aria-valuemin="0"
-                                        aria-valuemax="100">98.5%</div>
-                                </div> -->
-                                <!-- End of progress bars -->
                                 <br/>
 
                                 <!-- Will only show if feedbackButtons is true -->
@@ -167,17 +153,23 @@
                                 <!-- End of feedback buttons -->
 
                                 <!-- Helper message only shown if feedbackButtons is true -->
-                                <small id="fileInputHelp" class="form-text text-white" ng-show="feedbackButtons">Use the buttons above to let 808 know if the prediction is correct or incorrect!</small>
+                                <small class="form-text text-white" ng-show="feedbackButtons">Use the buttons above to let 808 know if the prediction is correct or incorrect!</small>
                                 
                                 <!-- An input box to enter actual number displayed, only shown if predictionCorrection is true -->
                                 <div class="input-group animated fadeIn" ng-show="predictionCorrection">
-
-                                    <input type="number" class="form-control" placeholder="Enter the actual figure shown." aria-label="correctAnswer" aria-describedby="correctAnswer01" min="0" max="9">
-                                    <div class="input-group-addon bg-white">
-                                        <button class="btn btn-inverse text-white btn-dark btn-sm" id="correctAnswer01" ng-click="actualNumberFeedBack()">
-                                            <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
-                                        </button>
+                                    <div class="btn-group  mx-auto" role="group">
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(0)">0</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(1)">1</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(2)">2</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(3)">3</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(4)">4</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(5)">5</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(6)">6</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(7)">7</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(8)">8</button>
+                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(9)">9</button>
                                     </div>
+                                    <br/>                                    
                                 </div>
 
                                 <!-- Thank you message only shown if feedbackSent is true -->

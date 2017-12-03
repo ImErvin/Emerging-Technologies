@@ -20,6 +20,7 @@ angular.module('app.controllers', [])
     var message;
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
+    var outputValue = null;
     canvas.height = canvas.height+100;
 
     function setUpCanvas(){
@@ -70,25 +71,35 @@ angular.module('app.controllers', [])
     function uploadImage(base64){
         resetFeedback();
         $scope.displayImageFile = $scope.imageFile;
-        APIFactory.response.postImage(base64).then(function(data) {
+        APIFactory.request.postImage(base64).then(function(data) {
             $scope.displayImageFile = base64;
             $scope.rendered = data.data;
         });
+    }
+
+    function uploadFeedback(outputvalue, base64){
+        $scope.displayImageFile = $scope.imageFile;
+
+        APIFactory.request.postFeedback(outputvalue, base64);
     }
 
     function feedback(correct){
         if(correct){
             $scope.feedbackButtons = false;
             $scope.feedbackSent = true;
+
+            uploadFeedback($scope.rendered.prediction, $scope.displayImageFile)
         }else{
             $scope.feedbackButtons = false;
             $scope.predictionCorrection = true;
         }
     }
 
-    function actualNumberFeedBack(){
+    function actualNumberFeedBack(number){
         $scope.predictionCorrection = false;
         $scope.feedbackSent = true;
+
+        uploadFeedback(number, $scope.displayImageFile)        
     }
 
     function resetFeedback(){

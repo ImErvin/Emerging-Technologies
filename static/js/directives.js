@@ -89,7 +89,6 @@ angular.module('app.directives', [])
           ctx.strokeStyle = "white";
           // draw it
 
-          ctx.fillRect(0, 0, element[0].width, element[0].height);
           ctx.stroke();
         }
       }

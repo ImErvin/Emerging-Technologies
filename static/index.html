@@ -48,7 +48,6 @@
                 <div class="col-md-12">
                     <!-- Little bit of information about the application (like an about page but significantly smaller) -->
                     <div class="alert alert-inverse text-center" role="alert">
-                        <br/>
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 808 is a handwriting recognition application
                         - Simply upload a handwritten number and voila!
                         <p>808 was trained and tested using the <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>.</p>
@@ -104,7 +103,9 @@
                     <!-- Start of canvas card -->
                     <!-- Only shown if uploadOption[1] is true -->
                     <div class="card text-white bg-dark mb-3 animated fadeIn card-shadow" ng-show="uploadOption[1]">
-                        <div class="card-header">Upload Image from Canvas</div>
+                        <div class="card-header">Upload Image from Canvas
+                            <button class="btn btn-primary pull-right btn-sm" ng-click="setUpCanvas()"><i class="fa fa-refresh"></i></button>
+                        </div>
                         <div class="card-body text-center bg-custom">
                             <!-- Error message -->
                             <p class="text-white animated bounceIn" ng-if="message">{{message}}</p>

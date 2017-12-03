@@ -13,7 +13,7 @@
 import flask
 from flask import Flask, request, json, abort
 
-# Import Python's Image Library to resize images
+# Import Python's Image Library to resize images and io to read bytes
 import PIL.Image
 import io
 
@@ -25,6 +25,8 @@ import base64
 
 # Import re to use Regular Expressions
 import re
+
+from Tensorflow.predictor import makePrediction
 
 app = Flask(__name__)
 
@@ -88,7 +90,7 @@ def resizeImage(byteArray, fileName):
     rgbValueArray = np.asarray( bicubicRS, dtype="int32" ) #[5]
 
     # Examine the shape, at this point it returns as (28, 28, 2)
-    print(rgbValueArray.shape)
+    #print(rgbValueArray.shape)
 
     # I just need it to be (28,28), so I will create a new array by retrieving the first index of the (2) part of that shape
     rgbValueArray_spliced = [[y[0] for y in x] for x in rgbValueArray] #[6]
@@ -96,8 +98,9 @@ def resizeImage(byteArray, fileName):
     rgbValueArray_spliced = np.array(rgbValueArray_spliced)
     
     # Review shape again - it has the (28,28) shape
-    print(rgbValueArray_spliced.shape)
+    #print(rgbValueArray_spliced.shape)
     
+    makePrediction(rgbValueArray_spliced)
     
 
 # Root hosts the index.html file

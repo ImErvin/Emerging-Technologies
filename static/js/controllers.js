@@ -114,4 +114,5 @@ angular.module('app.controllers', [])
     $scope.message = message;
     $scope.feedback = feedback;
     $scope.actualNumberFeedBack = actualNumberFeedBack;
+    $scope.setUpCanvas = setUpCanvas;
 });

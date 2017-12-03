@@ -65,3 +65,17 @@ My personal aim of this project was to get to a good level of knowledge on neura
 If I were to do this project again, I'd consider adding some extra features such as training another model with the CIFAR-10 dataset and allowing users to alter between hand-drawn images to images of trucks for example. I would also play around with the layers in my neural network and play around with some dropouts to take care of any overfittings that may happen on my current NN.
 
 ### Screenshots
+**Homescreen**
+![Homescreen](https://github.com/ImErvin/Emerging-Technologies/blob/master/uploads/8081.png)
+
+**Canvas upload and prediction**
+![Canvas](https://github.com/ImErvin/Emerging-Technologies/blob/master/uploads/8082.png)
+
+**Correct prediction feedback**
+![Correct prediction feedback](https://github.com/ImErvin/Emerging-Technologies/blob/master/uploads/8083.png)
+
+**Incorrect prediction feedback**
+![Incorrect prediction feedback](https://github.com/ImErvin/Emerging-Technologies/blob/master/uploads/8084.png)
+
+**Responsive Design**
+![Responsive](https://github.com/ImErvin/Emerging-Technologies/blob/master/uploads/8085.png)

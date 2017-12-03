@@ -3,7 +3,7 @@
 
 For my emerging technologies module in college I built this application and named it 808. The specification of the project was to be to train a Neural Network(NN) using a popular library such as Tensorflow and use that trained NN to predict the what number is present on a file passed in from a front end web application.
 
-This repository holds my solution to this project specification. This README shows you how to install the repository, the technologies I used, the features of my web application, the architecture of my files and some personal notes of my experience building this application. If you're looking for more detailed explanations on the code, check out my [Jupyter Notebook](https://github.com/ImErvin/Emerging-Technologies/blob/master/Tensorflow/mnist_model_training.ipynb) and any other code files (.py .js .html) for the comments.
+This repository holds my solution to this project specification. This README shows you how to install the repository, the technologies I used, the features of my web application, the architecture of my files and some personal notes of my experience building this application. If you're looking for more detailed explanations on how I built this application and the references, check out my [Jupyter Notebook](https://github.com/ImErvin/Emerging-Technologies/blob/master/Tensorflow/mnist_model_training.ipynb) and any other code files (.py .js .html) for the comments.
 
 ### How to use this repository
 

@@ -1,1 +1,2 @@
+// Create angular module named 'app' and connect app.controllers, app.services and app.directives - this acts as the main module
 angular.module('app', ['app.controllers','app.services', 'app.directives'])

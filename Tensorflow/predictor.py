@@ -81,7 +81,9 @@ def train(input_image, output_label):
     # Save the model to be loaded in next session
     model.save("Tensorflow/updated_mnist_cnn.h5")
 
+    # Increment number of times trained and return the value after incrementation
     count = setNoTrained()
 
+    # Send this value to the route
     return count
     

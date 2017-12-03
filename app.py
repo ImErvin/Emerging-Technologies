@@ -36,26 +36,17 @@ app = Flask(__name__)
 class Image(object):
 
     fileName = "" # Name of the file being uploaded
-    message = "" # The message shown to the user e.g: Successful upload etc.
-    icon = "" # The icon for the message above (used for UX on the front end). E.g: "fa fa-thumbs" for a thumbs up
-    bgColor = "" # Set the background color of the message above (again mainly for UX). E.g: "bg-danger" to indicate an error.
-    prediction = "" # This is the prediction from Tensorflow
+    prediction = "" # This is the prediction from Keras
 
     # Create a constructor for the class 
-    def __init__(self, fileName, message, icon, bgColor, prediction):
+    def __init__(self, fileName, prediction):
         self.fileName = fileName
-        self.message = message
-        self.icon = icon
-        self.bgColor = bgColor
         self.prediction = prediction
     
     # Create serialize function to serialize the data to be be sent as JSON.
     def serialize(self):
         return{
             'fileName':self.fileName,
-            'message':self.message,
-            'icon':self.icon,
-            'bgColor':self.bgColor,
             'prediction':self.prediction,
         }
 
@@ -64,44 +55,26 @@ def resizeImage(byteArray):
     # Use PIL to extract the image from the bytearray
     image = PIL.Image.open(io.BytesIO(byteArray)) # [2]
 
-    # Try out all the resize filters to see which works best.
-    # nearestRS = image.resize((28,28), PIL.Image.NEAREST)
-    # bilinearRS = image.resize((28,28), PIL.Image.BILINEAR)
-    # bicubicRS = image.resize((28,28), PIL.Image.BICUBIC)
-    # lanczosRS = image.resize((28,28), PIL.Image.LANCZOS)
-
-    # nearestRS.save("uploads/nearestRS.png")
-    # bilinearRS.save("uploads/bilinearRS.png")
-    # bicubicRS.save("uploads/bicubicRS.png")
-    # lanczosRS.save("uploads/lanczosRS.png")
-
     # After trying each filter out using canvas and upload from file
     # Nearest performed the worst in both canvas and file
     # Cubic performed the best with canvas images and file - they all kind of tied.
     # So through trial and error I decided to use bicubic
-    
     # Apply the resize using PIL's .resize with the Bicubic filter
     bicubicRS = image.resize((28,28), PIL.Image.BICUBIC) # [3]
+
     # Convert the into grayscale to reduce its channel to 1 dimension (1 rgb value for each pixel)
     bicubicRS = bicubicRS.convert('LA') # [4]
-    # Save the output with dynamic filename
-    #bicubicRS.save("uploads/"+fileName)
 
     # Now I want to retrieve the RGB values of each pixel in the image
     # I'm using numpys asarray to convert the image to an array and reading each value as an int32
     rgbValueArray = np.asarray( bicubicRS, dtype="int32" ) #[5]
 
-    # Examine the shape, at this point it returns as (28, 28, 2)
-    #print(rgbValueArray.shape)
-
     # I just need it to be (28,28), so I will create a new array by retrieving the first index of the (2) part of that shape
     rgbValueArray_spliced = [[y[0] for y in x] for x in rgbValueArray] #[6]
+
     # Convert it to a numpy array
     rgbValueArray_spliced = np.array(rgbValueArray_spliced)
-    
-    # Review shape again - it has the (28,28) shape
-    #print(rgbValueArray_spliced.shape)
-    
+
     return rgbValueArray_spliced
 
 # Function is used to decode base64 into byte array
@@ -114,6 +87,7 @@ def extractB64(b64String):
     # To use the base64.decodebytes function below, I must encode the string into bytes again.
     dataRegex = str.encode(dataRegex)
 
+    # Return the decoded bytes
     return base64.decodebytes(dataRegex)
 
 # Root hosts the index.html file
@@ -121,12 +95,12 @@ def extractB64(b64String):
 def homepage():
     return app.send_static_file('index.html')
 
-# /uploadImage route is used to save an image file locally
+# /postImage route is used to recieve base64 encoded images
 @app.route('/postImage', methods=['POST'])
-def uploadImage():
+def postImage():
     if flask.request.method == 'POST':
         data = request.json # Read the request.data (JSON from requqest)
-        print(data)
+
         if(data['imageBase64'] != 'undefined'):
             # Call resizeImage and pass in the decoded image byte array
             # This will resize and convert the image into a numby array to make a prediction on.
@@ -136,28 +110,38 @@ def uploadImage():
             # Make a prediction by passing the image array into the predictor function
             prediction = makePrediction(imageArray)
 
-            image = Image(data['imageFileName'], "Image was saved successfully", "fa fa-thumbs-up text-dark", "badge badge-warning", str(prediction))
+            # Build the image dictionary to send back as JSON
+            image = Image(data['imageFileName'], str(prediction))
 
+            # Serialize the image dict and send it as JSON
             return json.dumps(image.serialize())
-        
-@app.route('/postFeedback', methods=['POST'])
-def feedBackRecieved():
-    if flask.request.method == 'POST':
-        data = request.json
-        # Call resizeImage and pass in the decoded image byte array
-        # This will resize and convert the image into a numby array to make a prediction on.
-        # Passing in a decoded byte array from base64.
-        imageArray = resizeImage(extractB64(data['imageBase64']))
-        
-        # Call the train method and pass in the input (imageArray) and output (data value)
-        count = train(imageArray, data['outputValue'])
-        
-        return json.dumps(count)
 
+# /postFeedback route is used to recieve the feedback on the prediction and train the model using the new input/output data
+@app.route('/postFeedback', methods=['POST'])
+def postFeedback():
+    if flask.request.method == 'POST':
+        # Init data as the json that is being passed in
+        data = request.json
+        
+        if(data['imageBase64'] != 'undefined'):
+            # Call resizeImage and pass in the decoded image byte array
+            # This will resize and convert the image into a numby array to make a prediction on.
+            # Passing in a decoded byte array from base64.
+            imageArray = resizeImage(extractB64(data['imageBase64']))
+            
+            # Call the train method and pass in the input (imageArray) and output (data value)
+            count = train(imageArray, data['outputValue'])
+            
+            # 
+            return json.dumps(count)
+
+# /getNoTrained is used to retrieve the amount of times the model has been trained by users
 @app.route('/getNoTrained', methods=['GET'])
 def returnNoTrained():
+    # Use predictors getNoTrained method to return the number saved in the editedCount file.
     count = getNoTrained()
 
+    # Return count as JSON
     return json.dumps(count)
 
 #Main method.

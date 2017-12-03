@@ -1,5 +1,4 @@
 # 808 - Handwritten Recognition. Written by Ervin Mamutov - github.com/imervin
-
 import keras as kr
 import numpy as np
 from keras.datasets import mnist

@@ -78,8 +78,6 @@ angular.module('app.controllers', [])
     }
 
     function uploadFeedback(outputvalue, base64){
-        $scope.displayImageFile = $scope.imageFile;
-
         APIFactory.request.postFeedback(outputvalue, base64);
     }
 

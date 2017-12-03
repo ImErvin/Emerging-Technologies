@@ -3,11 +3,16 @@
 
 # Adapted Code From -
 #   [1] Regular Expression Delete everything before - https://stackoverflow.com/questions/7793950/regex-to-remove-all-text-before-a-character
-#   []
+#   [2] Reading byte array into image on the fly- 
+#   [3] Resizing image using PIL - https://pillow.readthedocs.io/en/3.1.x/reference/Image.html
 
 # Import flask and helpful flask libraries
 import flask
 from flask import Flask, request, json, abort
+
+# Import Python's Image Library to resize images
+import PIL.Image
+import io
 
 # Import base64 to work with base64 encoded images
 import base64
@@ -44,6 +49,16 @@ class Image(object):
             'prediction':self.prediction,
         }
 
+# Function to resize an image from a byte array
+def resizeImage(byteArray):
+    # Use PIL to extract the image from the bytearray
+    image = PIL.Image.open(io.BytesIO(byteArray))
+    # Use PIL's .resize function to turn it into MNIST shape (Length, Width) = (28,28)
+    image_resized = image.resize((28,28), PIL.Image.NEAREST)
+    # Save the image to see what it looks like after the resize
+    image_resized.save("test.png")
+    
+
 # Root hosts the index.html file
 @app.route('/')
 def homepage():
@@ -59,14 +74,14 @@ def uploadImage():
             # The value of the imageBase64 key in the dictionary results in something like "data:image/png;base64,iVBOR.."
             # I just want the "iVBOR.." part of the result above so I use a regular expression to remove everything before the ','.
             dataRegex = re.sub('^[^_]*,', '', str(data['imageBase64'])) # [1]
-            print(data)
+            #print(data)
             # The above regular expression turned the base64 byte data from byte-like object to string.
             # To use the base64.decodebytes function below, I must encode the string into bytes again.
             dataRegex = str.encode(dataRegex)
 
-            with open('uploads/'+data['imageFileName'], "wb") as fh:
-                fh.write(base64.decodebytes(dataRegex))
-            
+            # Call resizeImage and pass in the decoded image byte array
+            resizeImage(base64.decodebytes(dataRegex))
+
             image = Image(data['imageFileName'], "Image was saved successfully", "fa fa-thumbs-up text-dark", "badge badge-warning", "9")
 
             return json.dumps(image.serialize())

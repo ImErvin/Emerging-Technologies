@@ -50,13 +50,30 @@ class Image(object):
         }
 
 # Function to resize an image from a byte array
-def resizeImage(byteArray):
+def resizeImage(byteArray, fileName):
     # Use PIL to extract the image from the bytearray
     image = PIL.Image.open(io.BytesIO(byteArray))
-    # Use PIL's .resize function to turn it into MNIST shape (Length, Width) = (28,28)
-    image_resized = image.resize((28,28), PIL.Image.NEAREST)
-    # Save the image to see what it looks like after the resize
-    image_resized.save("test.png")
+
+    # Try out all the resize filters to see which works best.
+    # nearestRS = image.resize((28,28), PIL.Image.NEAREST)
+    # bilinearRS = image.resize((28,28), PIL.Image.BILINEAR)
+    # bicubicRS = image.resize((28,28), PIL.Image.BICUBIC)
+    # lanczosRS = image.resize((28,28), PIL.Image.LANCZOS)
+
+    # nearestRS.save("uploads/nearestRS.png")
+    # bilinearRS.save("uploads/bilinearRS.png")
+    # bicubicRS.save("uploads/bicubicRS.png")
+    # lanczosRS.save("uploads/lanczosRS.png")
+
+    # After trying each filter out using canvas and upload from file
+    # Nearest performed the worst in both canvas and file
+    # Cubic performed the best with canvas images and file - they all kind of tied.
+    # So through trial and error I decided to use bicubic
+    
+    # Apply the resize using PIL's .resize with the Bicubic filter
+    bicubicRS = image.resize((28,28), PIL.Image.BICUBIC)
+    # Save the output as 
+    bicubicRS.save("uploads/"+fileName)
     
 
 # Root hosts the index.html file
@@ -80,7 +97,7 @@ def uploadImage():
             dataRegex = str.encode(dataRegex)
 
             # Call resizeImage and pass in the decoded image byte array
-            resizeImage(base64.decodebytes(dataRegex))
+            resizeImage(base64.decodebytes(dataRegex), data['imageFileName'])
 
             image = Image(data['imageFileName'], "Image was saved successfully", "fa fa-thumbs-up text-dark", "badge badge-warning", "9")
 

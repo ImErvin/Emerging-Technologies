@@ -5,7 +5,9 @@
   "main": "/static/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    // Installs the dependencies and runs my custom script
     "install": "node-gyp rebuild & npm run-script movemodules",
+    // Custom script to move the node modules into the static folder to be used in index.html
     "movemodules": "mv ./node_modules ./static/"
   },
   "repository": {

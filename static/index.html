@@ -51,6 +51,7 @@
                         <i class="fa fa-info-circle" aria-hidden="true"></i> 808 is a handwriting recognition application
                         - Simply upload a handwritten number and voila!
                         <p>808 was trained and tested using the <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset</a>.</p>
+                        <span ng-if="hasTrained" class="badge badge-success animated rubberBand">808 Has been trained {{ noTrained }} times</span>
                     </div>
                 </div>
                 <!-- End of col-12 -->
@@ -87,8 +88,8 @@
                                 <div class="form-group">
                                     <label for="fileInput01">Example file input</label>
                                     <!-- fileread directive to capture this element and retrieve the base64 of the the image and set the value of it to imageFile -->
-                                    <input enctype="multipart/form-data" type="file"  accept=".png,.jpg,.jpeg" class="form-control-file" fileread="imageFile" aria-describedby="fileInputHelp"
-                                        id="fileInput01">
+                                    <input enctype="multipart/form-data" type="file" accept=".png,.jpg,.jpeg" class="form-control-file" fileread="imageFile"
+                                        aria-describedby="fileInputHelp" id="fileInput01">
                                     <small id="fileInputHelp" class="form-text text-white">Use the "Choose File" button above to select an image to upload and process.</small>
                                 </div>
                             </form>
@@ -123,7 +124,7 @@
 
                 <!-- Start of col-6 -->
                 <div class="col-md-6">
-                    <div class="card text-white border-dark bg-dark text-center card-shadow">
+                    <div class="card text-white bg-dark text-center card-shadow">
                         <!-- Card header changes to filename when user uploads -->
                         <div ng-if="rendered.fileName" class="card-header font-weight-bold">{{rendered.fileName}}</div>
                         <div ng-if="!rendered.fileName" class="card-header font-weight-bold">placeholderimg.png</div>
@@ -131,51 +132,50 @@
                         <img ng-if="displayImageFile" class="card-img bg-dark cardImage" src="{{displayImageFile}}" alt="The image will be shown here.">
                         <img ng-if="!displayImageFile" class="card-img bg-white cardImage" src="/static/assets/placeholderimg.png" alt="The image will be shown here.">
 
-                        <div class="card-footer bg-dark">
+                        <div class="card-footer bg-transparent text-dark">
                             <!-- Will show if there has been a prediction made from server -->
                             <div ng-if="rendered.prediction">
                                 <!-- Print out prediction from server -->
-                                <h1><span class="badge badge-dark bg-custom text-white">{{rendered.prediction}}</span></h1>
-                                <br/>
-
-                                <!-- Will only show if feedbackButtons is true -->
-                                <!-- Start of feedback buttons -->
-                                <div class="row" ng-show="feedbackButtons">
-                                    <div class="col-md-6">
-                                        <!-- Will set feedbackSent to true and feedbackButtons to false -->
-                                        <button class="btn btn-md btn-block text-dark btn-warning" ng-click="feedback(true)"><i class="fa fa-thumbs-up"></i> Correct</button>
+                                <div class="row" >
+                                    <div class="col-md-2 badge badge-white bg-custom justify-content-center align-items-center" ng-hide="feedbackSent">
+                                        <h1><span class="badge badge-dark bg-transparent text-white mx-auto">{{rendered.prediction}}</span></h1>
+                                        <small class="text-dark">Prediction</small>
                                     </div>
-                                    <div class="col-md-6">
-                                        <!-- Will set predictionCorrection to true and feedbackButtons to false -->
-                                        <button class="btn btn-md btn-block text-dark btn-warning" ng-click="feedback(false)"><i class="fa fa-thumbs-down"></i> Incorrect</button>
+                                    <div class="col-md-10 badge badge-white bg-dark"  ng-hide="feedbackSent">
+                                        <!-- Will only show if feedbackButtons is true -->
+                                        <div ng-show="feedbackButtons">
+                                            <!-- Will set feedbackSent to true and feedbackButtons to false -->
+                                            <button class="btn btn-md btn-block text-white btn-dark" ng-click="feedback(true)"><i class="fa fa-thumbs-up"></i> Correct</button>
+                                            <button class="btn btn-md btn-block text-white btn-dark" ng-click="feedback(false)"><i class="fa fa-thumbs-down"></i> Incorrect</button>
+                                            <!-- Helper message only shown if feedbackButtons is true -->
+                                            <small class="form-text text-white" ng-show="feedbackButtons">Use the buttons above to let 808 know if the prediction is correct or incorrect!</small>
+                                        </div>
+                                        <!-- An input box to enter actual number displayed, only shown if predictionCorrection is true -->
+                                        <div class="input-group animated fadeIn justify-content-center align-items-center" ng-show="predictionCorrection">
+                                            <div class="btn-group mx-auto" role="group">
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(0)">0</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(1)">1</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(2)">2</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(3)">3</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(4)">4</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(5)">5</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(6)">6</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(7)">7</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(8)">8</button>
+                                                <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(9)">9</button>
+                                            </div>
+                                            <br/>
+                                        </div>
+                                    </div>
+                                    <div ng-show="feedbackSent" class="col-md-12 badge badge-white bg-custom justify-content-center align-items-center">
+                                        <h1><span class="badge badge-dark bg-transparent text-white mx-auto">{{rendered.prediction}}</span></h1>
+                                        <small class="text-dark">Prediction</small>
                                     </div>
                                 </div>
-                                <!-- End of feedback buttons -->
-
-                                <!-- Helper message only shown if feedbackButtons is true -->
-                                <small class="form-text text-white" ng-show="feedbackButtons">Use the buttons above to let 808 know if the prediction is correct or incorrect!</small>
-                                
-                                <!-- An input box to enter actual number displayed, only shown if predictionCorrection is true -->
-                                <div class="input-group animated fadeIn" ng-show="predictionCorrection">
-                                    <div class="btn-group  mx-auto" role="group">
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(0)">0</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(1)">1</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(2)">2</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(3)">3</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(4)">4</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(5)">5</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(6)">6</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(7)">7</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(8)">8</button>
-                                        <button type="button" class="btn btn-danger" ng-click="actualNumberFeedBack(9)">9</button>
-                                    </div>
-                                    <br/>                                    
-                                </div>
-
                                 <!-- Thank you message only shown if feedbackSent is true -->
-                                <small class="text-white animated fadeIn" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a
-                                            long way. Feel free to try it again, and again, and again..!</small>
-
+                                <small class="text-white" ng-show="feedbackSent">Thank you for your feedback - 808 is constantly learning so your feedback goes a
+                                        long way. Feel free to try it again, and again, and again..!</small>
+                                <h1 ng-show="feedbackSent" class="text-danger"><i class="fa fa-smile-o animated bounceInDown"></i></h1>
                             </div>
                         </div>
                     </div>

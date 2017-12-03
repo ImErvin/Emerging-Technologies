@@ -18,9 +18,17 @@ angular.module('app.controllers', [])
     var displayImageFile;
     var canvasTouched = false;
     var message;
+    var outputValue = null;
+    var noTrained = null;
+    var hasTrained = true;
+
+    APIFactory.request.getNoTrained().then(function(data){
+        $scope.noTrained = data.data;
+    });
+
+
     var canvas = document.getElementById("drawImageCanvas");
     var ctx = canvas.getContext("2d");
-    var outputValue = null;
     canvas.height = canvas.height+100;
 
     function setUpCanvas(){
@@ -49,6 +57,7 @@ angular.module('app.controllers', [])
 
     function uploadFromFile(file){
         if(file){
+            var file = $scope.imageFile
             uploadImage(file);
             $scope.message = undefined;
         }else{
@@ -60,7 +69,11 @@ angular.module('app.controllers', [])
     function uploadFromCanvas(){
         if($scope.canvasTouched){
             var pngUrl = canvas.toDataURL();
-            uploadImage(pngUrl);
+            var file = {
+                imageBase64: pngUrl,
+                imageFileName: "CanvasImage.png"
+            }
+            uploadImage(file);
             $scope.message = undefined;
         }else{
             $scope.message = "Draw on the canvas before uploading!"
@@ -70,15 +83,24 @@ angular.module('app.controllers', [])
 
     function uploadImage(base64){
         resetFeedback();
-        $scope.displayImageFile = $scope.imageFile;
+        // $scope.displayImageFile = $scope.imageFile.imageBase64;
+
         APIFactory.request.postImage(base64).then(function(data) {
-            $scope.displayImageFile = base64;
+            $scope.displayImageFile = base64.imageBase64;
             $scope.rendered = data.data;
         });
     }
 
     function uploadFeedback(outputvalue, base64){
-        APIFactory.request.postFeedback(outputvalue, base64);
+        var feedback = {
+            outputValue: outputvalue,
+            imageBase64: base64
+        }
+        APIFactory.request.postFeedback(feedback).then(function(data){
+            $scope.hasTrained = false;
+            $scope.hasTrained = true;
+            $scope.noTrained = data.data;
+        });;
     }
 
     function feedback(correct){
@@ -97,7 +119,7 @@ angular.module('app.controllers', [])
         $scope.predictionCorrection = false;
         $scope.feedbackSent = true;
 
-        uploadFeedback(number, $scope.displayImageFile)        
+        uploadFeedback(number, $scope.displayImageFile);   
     }
 
     function resetFeedback(){
@@ -124,4 +146,6 @@ angular.module('app.controllers', [])
     $scope.feedback = feedback;
     $scope.actualNumberFeedBack = actualNumberFeedBack;
     $scope.setUpCanvas = setUpCanvas;
+    $scope.noTrained = noTrained;
+    $scope.hasTrained = hasTrained;
 });

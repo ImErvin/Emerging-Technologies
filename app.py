@@ -26,8 +26,10 @@ import base64
 # Import re to use Regular Expressions
 import re
 
-from Tensorflow.predictor import makePrediction, train
+# Import my local python files to use prediction and training
+from Tensorflow.predictor import makePrediction, train, getNoTrained
 
+# Init app as flask
 app = Flask(__name__)
 
 # This class is used to mimic the "rendered" object on the front end.
@@ -124,7 +126,7 @@ def homepage():
 def uploadImage():
     if flask.request.method == 'POST':
         data = request.json # Read the request.data (JSON from requqest)
-
+        print(data)
         if(data['imageBase64'] != 'undefined'):
             # Call resizeImage and pass in the decoded image byte array
             # This will resize and convert the image into a numby array to make a prediction on.
@@ -148,9 +150,15 @@ def feedBackRecieved():
         imageArray = resizeImage(extractB64(data['imageBase64']))
         
         # Call the train method and pass in the input (imageArray) and output (data value)
-        train(imageArray, data['outputValue'])
+        count = train(imageArray, data['outputValue'])
+        
+        return json.dumps(count)
 
-        return json.dumps("Thank you!")
+@app.route('/getNoTrained', methods=['GET'])
+def returnNoTrained():
+    count = getNoTrained()
+
+    return json.dumps(count)
 
 #Main method.
 if __name__ == "__main__":  

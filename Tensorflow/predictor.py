@@ -18,6 +18,30 @@ sdg = kr.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)
 # Recompile with new optimiser
 model.compile(optimizer=sdg, loss="categorical_crossentropy", metrics=["accuracy"])
 
+# Return the number in editedCount.txt
+def getNoTrained():
+    f  = open('Tensorflow/editedCount.txt', 'r')
+    count = f.read(1)
+    count = float(count)
+    count = int(count)
+    f.close()
+    
+    return count
+
+# Function to add 1 to the file editedCount.txt - r+ wouldn't work for me so I use an open with r and w.
+def setNoTrained():
+    f  = open('Tensorflow/editedCount.txt', 'r')
+    count = f.read(1)
+    f.close()
+    f = open('Tensorflow/editedCount.txt', 'w')
+    print(count)
+    count = float(count)
+    count = int(count)
+    count += 1
+    f.write(str(count))
+    f.close()
+
+    return count
 
 # Function to reshape data into (1,28,28,1) to use with convolution layers
 def reshapeData(array):
@@ -56,3 +80,8 @@ def train(input_image, output_label):
 
     # Save the model to be loaded in next session
     model.save("Tensorflow/updated_mnist_cnn.h5")
+
+    count = setNoTrained()
+
+    return count
+    

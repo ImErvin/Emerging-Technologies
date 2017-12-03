@@ -12,9 +12,15 @@ angular.module('app.directives', [])
                 
                 reader.onload = function (loadEvent) {
                     scope.$apply(function () {
-                        scope.fileread = loadEvent.target.result;
+                        fileObject = {
+                          imageBase64 : loadEvent.target.result,
+                          imageFileName: changeEvent.target.files[0].name
+                        }
+                        scope.fileread = fileObject;
                     });
                 }
+
+                
                 reader.readAsDataURL(changeEvent.target.files[0]);
             });
         }

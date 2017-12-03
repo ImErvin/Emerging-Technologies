@@ -4,15 +4,12 @@ angular.module('app.services', [])
 
         var request = {};
 
-        request.postImage = function (base64) {
+        request.postImage = function (file) {
             var deferred = $q.defer();
 
-            image = {
-                imageFileName: "imageFile1.png",
-                imageBase64: "" + base64
-            }
+            image = JSON.stringify(file);
 
-            image = JSON.stringify(image);
+            console.log(image)
 
             $http({
                 method: 'POST',
@@ -22,7 +19,6 @@ angular.module('app.services', [])
                 },
                 data: image,
             }).then(function success(response) {
-
                 deferred.resolve(response)
             }).catch(function (error) {
                 deferred.reject(error);
@@ -31,16 +27,11 @@ angular.module('app.services', [])
             return deferred.promise;
         }
 
-        request.postFeedback = function (outputvalue, base64) {
+        request.postFeedback = function (feedback) {
             var deferred = $q.defer();
 
-            image = {
-                outputValue: outputvalue,
-                imageBase64: "" + base64
-            }
-
-            image = JSON.stringify(image);
-
+            image = JSON.stringify(feedback);
+            console.log(image)
             $http({
                 method: 'POST',
                 url: 'http://127.0.0.1:5000/postFeedback',
@@ -49,7 +40,24 @@ angular.module('app.services', [])
                 },
                 data: image,
             }).then(function success(response) {
+                deferred.resolve(response)
+            }).catch(function (error) {
+                deferred.reject(error);
+            });
+            console.log(deferred.promise);
+            return deferred.promise;
+        }
 
+        request.getNoTrained = function () {
+            var deferred = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: 'http://127.0.0.1:5000/getNoTrained',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(function success(response) {
                 deferred.resolve(response)
             }).catch(function (error) {
                 deferred.reject(error);

@@ -55,7 +55,7 @@ angular.module('app.controllers', [])
 
     // Function to handle upload from file input
     function uploadFromFile(){
-        if(file){
+        if($scope.imageFile){
             // Set file to the object the directive sets it to - base64 and filename
             var file = $scope.imageFile
             // Pass file into uploadImage
@@ -99,7 +99,7 @@ angular.module('app.controllers', [])
         // Invoke the api service by passing file into postImage - once the promise is returned
         // set the display image to the base64 of the file sent up and set rendered to the data returned from server
         APIFactory.request.postImage(file).then(function(data) {
-            $scope.displayImageFile = base64.imageBase64;
+            $scope.displayImageFile = file.imageBase64;
             $scope.rendered = data.data;
         });
     }
